@@ -8,7 +8,8 @@
         "php-di/php-di": "^7.0",
         "ext-json": "*",
         "symfony/console": "^6.4",
-        "ramsey/uuid": "^4.9"
+        "ramsey/uuid": "^4.9",
+        "webmozart/assert": "^1.11"
     },
     "autoload": {
       "psr-4": {
