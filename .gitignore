@@ -2,3 +2,4 @@ vendor
 config/common/env
 .idea
 var
+.phpunit.cache
