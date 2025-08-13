@@ -14,15 +14,13 @@ class Handler
 {
     public function handle(Command $command): Response
     {
-        $host = new Host($command->host);
-        $course = new Course($command->branchId, $command->ticketId);
-        $cookie = new Cookie($command->cookie);
         $parser = new Parser(
             new Id(Uuid::uuid4()->toString()),
-            $host,
-            $course,
-            $cookie
+            new Host($command->host),
+            new Course($command->branchId, $command->ticketId),
+            new Cookie($command->cookie),
         );
+
 
         return new Response($parser);
     }
