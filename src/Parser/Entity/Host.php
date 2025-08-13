@@ -6,8 +6,8 @@ use Webmozart\Assert\Assert;
 
 class Host
 {
-    public const HOST_PRK = 'http://prk.kuzstu.ru:9001/';
-    public const HOST_CHUKK = 'http://olimpoks.chukk.ru:82/';
+    public const HOST_PRK = 'http://prk.kuzstu.ru:9001/Admin/Info/GetTicketInfo';
+    public const HOST_CHUKK = 'http://olimpoks.chukk.ru:82/Admin/Info/GetTicketInfo';
     private string $value;
 
     public function __construct(string $value)
