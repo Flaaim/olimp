@@ -3,6 +3,7 @@
 namespace App\Parser\Command\Input\Request;
 
 use App\Parser\Command\Input\Response\Response;
+use App\Parser\Entity\Cookie;
 use App\Parser\Entity\Course;
 use App\Parser\Entity\Host;
 use App\Parser\Entity\Id;
@@ -15,11 +16,12 @@ class Handler
     {
         $host = new Host($command->host);
         $course = new Course($command->branchId, $command->ticketId);
-
+        $cookie = new Cookie($command->cookie);
         $parser = new Parser(
             new Id(Uuid::uuid4()->toString()),
             $host,
-            $course
+            $course,
+            $cookie
         );
 
         return new Response($parser);
