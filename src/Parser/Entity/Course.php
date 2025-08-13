@@ -2,6 +2,8 @@
 
 namespace App\Parser\Entity;
 
+use Webmozart\Assert\Assert;
+
 class Course
 {
     private string $id;
@@ -9,6 +11,8 @@ class Course
 
     public function __construct(string $id, string $ticketId)
     {
+        Assert::notEmpty($id);
+        Assert::notEmpty($ticketId);
         $this->id = $id;
         $this->ticketId = $ticketId;
     }
