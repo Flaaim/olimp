@@ -27,7 +27,11 @@ class Handler
             );
             return $this->parseResponse($response->getBody()->getContents());
         }catch(GuzzleException $e){
-            throw new RequestException($e->getMessage(), $e->getCode());
+            throw new \RuntimeException(
+                'Failed to fetch data: ' . $e->getMessage(),
+                $e->getCode(),
+                $e
+            );
         }catch (\Exception $e){
             throw new \Exception($e->getMessage(), $e->getCode());
         }
