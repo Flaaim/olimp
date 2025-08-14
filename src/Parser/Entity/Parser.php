@@ -2,6 +2,8 @@
 
 namespace App\Parser\Entity;
 
+use ArrayObject;
+
 class Parser
 {
     private Id $id;
@@ -35,5 +37,4 @@ class Parser
     {
         return $this->cookie;
     }
-
 }

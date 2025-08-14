@@ -8,6 +8,7 @@ class ParserCommand
         public readonly string $host,
         public readonly string $branchId,
         public readonly string $ticketId,
-        public readonly string $cookie
+        public readonly string $cookie,
+        public readonly array $options = [],
     ){}
 }

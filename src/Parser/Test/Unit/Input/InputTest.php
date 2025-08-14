@@ -6,6 +6,7 @@ use App\Parser\Entity\Cookie;
 use App\Parser\Entity\Course;
 use App\Parser\Entity\Host;
 use App\Parser\Entity\Id;
+use App\Parser\Entity\Options;
 use App\Parser\Entity\Parser;
 use PHPUnit\Framework\TestCase;
 

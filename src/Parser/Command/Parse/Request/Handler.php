@@ -4,7 +4,6 @@ namespace App\Parser\Command\Parse\Request;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Exception\RequestException;
 
 
 class Handler
