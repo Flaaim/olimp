@@ -20,13 +20,13 @@ class ParserController
     {
         $data = $request->getParsedBody();
 
-
         try{
             $command = new ParserCommand(
                 $data['host'] ?? '',
                 $data['branchId'] ?? '',
                 $data['ticketId'] ?? '',
-                $data['cookie'] ?? ''
+                $data['cookie'] ?? '',
+                $data['options'] ?? []
             );
 
             $result = $this->parserHandler->handle($command);
