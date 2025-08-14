@@ -26,6 +26,11 @@ class Options
         return $this->options->offsetGet($key);
     }
 
+    public function has(string $key): bool
+    {
+        return $this->options->offsetExists($key);
+    }
+
     public function withValue(string $key, mixed $value): self
     {
         $clone = clone $this;

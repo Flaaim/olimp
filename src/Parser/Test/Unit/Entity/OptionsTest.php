@@ -30,16 +30,16 @@ class OptionsTest extends TestCase
     public function testSetValue(): void
     {
         $array = [];
-        $newValue = ['limit' => 5];
-        $options = (new Options($array))->withValue(key($newValue), current($newValue));
+        $value = ['limit' => 5];
+        $options = (new Options($array))->withValue(key($value), current($value));
 
-        $this->assertSame($options->getValue('limit'), $newValue['limit']);
+        $this->assertSame($value['limit'], $options->getValue('limit'));
+        $this->assertTrue($options->has(key($value)));
+
 
         $newValue = ['limit' => 6];
-
-        $options->withValue(key($newValue), current($newValue));
-
-        $this->assertSame($options->getValue('limit'), $newValue['limit']);
-
+        $newOptions = $options->withValue(key($newValue), current($newValue));
+        $this->assertSame($newValue['limit'], $newOptions->getValue('limit'));
     }
+
 }
