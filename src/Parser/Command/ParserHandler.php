@@ -9,7 +9,7 @@ use App\Parser\Command\Process\Request\Command as ProcessCommand;
 use App\Parser\Command\Process\Request\Handler as ProcessHandler;
 use App\Parser\Entity\Parser\Id;
 use App\Parser\Entity\Parser\Options;
-use App\Parser\Entity\Ticket;
+use App\Parser\Entity\Ticket\Ticket;
 use ArrayObject;
 use Ramsey\Uuid\Uuid;
 
