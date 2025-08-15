@@ -10,22 +10,21 @@ use App\Parser\Command\Process\Request\Handler as ProcessHandler;
 use App\Parser\Entity\Parser\Id;
 use App\Parser\Entity\Parser\Options;
 use App\Parser\Entity\Ticket\Ticket;
+use App\Parser\Service\QuestionDataHandler;
+use App\Parser\Service\QuestionsBuilder;
 use ArrayObject;
 use Ramsey\Uuid\Uuid;
 
 
 class ParserHandler
 {
-    private InputHandler $inputHandler;
-    private ParseHandler $parseHandler;
-    private ProcessHandler $processHandler;
-    public function __construct(InputHandler $inputHandler, ParseHandler $parseHandler, ProcessHandler $processHandler)
-    {
-        $this->inputHandler = $inputHandler;
-        $this->parseHandler = $parseHandler;
-        $this->processHandler = $processHandler;
-
-    }
+    public function __construct(
+        private readonly InputHandler        $inputHandler,
+        private readonly ParseHandler        $parseHandler,
+        private readonly ProcessHandler      $processHandler,
+        private readonly QuestionDataHandler $questionDataHandler,
+    )
+    {}
     public function handle(ParserCommand $parserCommand): array
     {
         $parser = $this->inputHandler->handle($parserCommand);
@@ -40,7 +39,9 @@ class ParserHandler
 
         $ticket = new Ticket(
             new Id(Uuid::uuid4()->toString()),
-            new ArrayObject($questions)
+            new ArrayObject(
+                (new QuestionsBuilder($this->questionDataHandler, $questions))->getArray()
+            )
         );
 
         return $ticket->getQuestions();
