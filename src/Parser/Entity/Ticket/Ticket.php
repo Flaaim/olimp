@@ -21,16 +21,7 @@ class Ticket
     }
     public function getQuestions(): array
     {
-        $result = [];
-        foreach ($this->questions as $question) {
-            $result[] = [
-                'id' => $question->getId(),
-                'number' => $question->getNumber(),
-                'text' => $question->getText(),
-                'image' => $question->getQuestionMainImg()
-            ];
-        }
-        return $result;
+        return $this->questions->getArrayCopy();
     }
 
 }
