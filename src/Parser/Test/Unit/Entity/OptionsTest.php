@@ -2,9 +2,8 @@
 
 namespace App\Parser\Test\Unit\Entity;
 
-use App\Parser\Entity\Options;
+use App\Parser\Entity\Parser\Options;
 use PHPUnit\Framework\TestCase;
-use function DI\value;
 
 class OptionsTest extends TestCase
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Parser\Entity;
+namespace App\Parser\Entity\Parser;
 
 use Webmozart\Assert\Assert;
 

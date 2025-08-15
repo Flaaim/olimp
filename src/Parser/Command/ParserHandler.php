@@ -3,12 +3,15 @@
 namespace App\Parser\Command;
 
 use App\Parser\Command\Input\Request\Handler as InputHandler;
-use App\Parser\Command\Process\Request\Command as ProcessCommand;
-
 use App\Parser\Command\Parse\Request\Command as ParseCommand;
 use App\Parser\Command\Parse\Request\Handler as ParseHandler;
+use App\Parser\Command\Process\Request\Command as ProcessCommand;
 use App\Parser\Command\Process\Request\Handler as ProcessHandler;
-use App\Parser\Entity\Options;
+use App\Parser\Entity\Parser\Id;
+use App\Parser\Entity\Parser\Options;
+use App\Parser\Entity\Ticket;
+use ArrayObject;
+use Ramsey\Uuid\Uuid;
 
 
 class ParserHandler
@@ -28,11 +31,18 @@ class ParserHandler
         $parser = $this->inputHandler->handle($parserCommand);
         $rawData = $this->parseHandler->handle(new ParseCommand($parser));
 
-        return $this->processHandler->handle(
+        $questions = $this->processHandler->handle(
             new ProcessCommand(
                 $rawData,
                 new Options($parserCommand->options)
             )
         );
+
+        $ticket = new Ticket(
+            new Id(Uuid::uuid4()->toString()),
+            new ArrayObject($questions)
+        );
+
+        return $ticket->getQuestions();
     }
 }

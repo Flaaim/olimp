@@ -2,7 +2,7 @@
 
 namespace App\Parser\Test\Unit\Entity;
 
-use App\Parser\Entity\Host;
+use App\Parser\Entity\Parser\Host;
 use PHPUnit\Framework\TestCase;
 
 class HostTest extends TestCase

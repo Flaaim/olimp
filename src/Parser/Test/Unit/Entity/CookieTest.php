@@ -2,7 +2,7 @@
 
 namespace App\Parser\Test\Unit\Entity;
 
-use App\Parser\Entity\Cookie;
+use App\Parser\Entity\Parser\Cookie;
 use PHPUnit\Framework\TestCase;
 
 class CookieTest extends TestCase

@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Parser\Entity;
-
-use ArrayObject;
+namespace App\Parser\Entity\Parser;
 
 class Parser
 {

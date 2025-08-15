@@ -3,12 +3,12 @@
 namespace App\Parser\Command\Input\Request;
 
 use App\Parser\Command\ParserCommand;
-use App\Parser\Entity\Cookie;
-use App\Parser\Entity\Course;
-use App\Parser\Entity\Host;
-use App\Parser\Entity\Id;
-use App\Parser\Entity\Options;
-use App\Parser\Entity\Parser;
+use App\Parser\Entity\Parser\Cookie;
+use App\Parser\Entity\Parser\Course;
+use App\Parser\Entity\Parser\Host;
+use App\Parser\Entity\Parser\Id;
+use App\Parser\Entity\Parser\Options;
+use App\Parser\Entity\Parser\Parser;
 use Ramsey\Uuid\Uuid;
 
 class Handler

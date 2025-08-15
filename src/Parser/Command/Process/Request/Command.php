@@ -2,7 +2,7 @@
 
 namespace App\Parser\Command\Process\Request;
 
-use App\Parser\Entity\Options;
+use App\Parser\Entity\Parser\Options;
 
 class Command
 {
