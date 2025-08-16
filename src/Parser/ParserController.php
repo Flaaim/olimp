@@ -13,7 +13,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 class ParserController
 {
     public function __construct(
-        private ParserHandler $parserHandler
+        private readonly ParserHandler $parserHandler
     ){}
 
     public function parse(Request $request, Response $response): Response
