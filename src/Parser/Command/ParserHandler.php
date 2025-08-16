@@ -11,6 +11,8 @@ use App\Parser\Entity\Parser\Id;
 use App\Parser\Entity\Parser\Options;
 use App\Parser\Entity\Ticket\Ticket;
 use App\Parser\Service\QuestionDataHandler;
+use App\Parser\Service\QuestionProcessor;
+use App\Parser\Service\QuestionSanitizer;
 use App\Parser\Service\QuestionsBuilder;
 use ArrayObject;
 use Ramsey\Uuid\Uuid;
@@ -22,7 +24,6 @@ class ParserHandler
         private readonly InputHandler        $inputHandler,
         private readonly ParseHandler        $parseHandler,
         private readonly ProcessHandler      $processHandler,
-        private readonly QuestionDataHandler $questionDataHandler,
     )
     {}
     public function handle(ParserCommand $parserCommand): array
@@ -37,12 +38,10 @@ class ParserHandler
             )
         );
 
-        $ticket = new Ticket(
-            new Id(Uuid::uuid4()->toString()),
-            new ArrayObject(
-                (new QuestionsBuilder($this->questionDataHandler, $questions))->getArray()
-            )
-        );
+        $ticket = (new QuestionProcessor(
+            new QuestionSanitizer(),
+            new QuestionsBuilder()
+        ))->createTicket($questions);
 
         return $ticket->getQuestions();
     }

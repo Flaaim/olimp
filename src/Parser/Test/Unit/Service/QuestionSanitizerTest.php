@@ -9,20 +9,11 @@ class QuestionSanitizerTest extends TestCase
 {
     public function testSuccess(): void
     {
-        $sanitizer = new QuestionSanitizer($this->getQuestionsWithTags());
+        $sanitized = (new QuestionSanitizer())->sanitize($this->getQuestionsWithTags());
 
-        $this->assertNotNull($sanitizer->getArray());
-
-        $sanitized = $sanitizer->sanitizeTextField();
-
-        $this->assertEquals($this->getSanitizedQuestions(), $sanitized->getArray());
+        $this->assertEquals($this->getSanitizedQuestions(), $sanitized);
     }
 
-    public function testEmptyArray(): void
-    {
-        $this->expectException(\InvalidArgumentException::class);
-        new QuestionSanitizer([]);
-    }
 
     private function getQuestionsWithTags(): array
     {

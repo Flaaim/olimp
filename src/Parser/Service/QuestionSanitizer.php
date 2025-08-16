@@ -2,32 +2,17 @@
 
 namespace App\Parser\Service;
 
-use Webmozart\Assert\Assert;
-
-class QuestionSanitizer
+final class QuestionSanitizer
 {
-    private array $questions;
-    public function __construct(array $questions)
+    public function sanitize(array $rawQuestions): array
     {
-        Assert::notEmpty($questions);
-        $this->questions = $questions;
-    }
-
-    public function sanitizeTextField(): self
-    {
-        $sanitized = array_map(
+        return array_map(
             fn ($questionData) => [
                 ...$questionData,
                 'Text' => $this->stripTagsTextField($questionData['Text']),
             ],
-            $this->questions
+            $rawQuestions
         );
-        return new self($sanitized);
-    }
-
-    public function getArray(): array
-    {
-        return $this->questions;
     }
     private function stripTagsTextField(string $text): string
     {
