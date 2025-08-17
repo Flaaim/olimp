@@ -9,7 +9,7 @@ class Question
     private string $id;
     private string $number;
     private string $text;
-    private string $questionMainImg;
+    private ?string $questionMainImg;
     public function __construct(string $id, string $number, string $text, string $questionMainImg)
     {
         $this->id = $id;

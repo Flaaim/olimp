@@ -2,17 +2,33 @@
 
 namespace App\Parser\Service;
 
+use App\Parser\Entity\Parser\Host;
+
 final class QuestionSanitizer
 {
+    private Host $host;
+    public function __construct(Host $host)
+    {
+        $this->host = $host;
+    }
     public function sanitize(array $rawQuestions): array
     {
         return array_map(
             fn ($questionData) => [
                 ...$questionData,
                 'Text' => $this->stripTagsTextField($questionData['Text']),
+                'QuestionMainImg' => $this->getImagePath($questionData['QuestionMainImg']),
             ],
             $rawQuestions
         );
+    }
+
+    private function getImagePath(string $img): string
+    {
+        if (preg_match('/src="\/([^"]+)"/', $img, $matches)) {
+            return $this->host->getValue(). $matches[1]; // QuestionImages/c2050/.../1.jpg
+        }
+        return $img;
     }
     private function stripTagsTextField(string $text): string
     {

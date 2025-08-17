@@ -35,7 +35,7 @@ class ParserHandler
         );
 
         $ticket = (new QuestionProcessor(
-            new QuestionSanitizer(),
+            new QuestionSanitizer($parser->getHost()),
             new QuestionsBuilder()
         ))->createTicket($questions);
 
