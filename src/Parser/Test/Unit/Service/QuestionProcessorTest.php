@@ -5,16 +5,16 @@ namespace App\Parser\Test\Unit\Service;
 use App\Parser\Entity\Parser\Host;
 use App\Parser\Entity\Parser\HostMapper;
 use App\Parser\Entity\Ticket\Ticket;
-use App\Parser\Service\QuestionProcessor;
-use App\Parser\Service\QuestionSanitizer;
-use App\Parser\Service\QuestionsBuilder;
+use App\Parser\Service\TicketProcessor;
+use App\Parser\Service\TicketSanitizer;
+use App\Parser\Service\TicketBuilder;
 use PHPUnit\Framework\TestCase;
 
 class QuestionProcessorTest extends TestCase
 {
     public function testSuccess(): void
     {
-        $processor = new QuestionProcessor(
+        $processor = new TicketProcessor(
             $this->getSanitizer(),
             $this->getBuilder(),
         );
@@ -24,7 +24,7 @@ class QuestionProcessorTest extends TestCase
     }
     public function testEmpty(): void
     {
-        $processor = new QuestionProcessor(
+        $processor = new TicketProcessor(
             $this->getSanitizer(),
             $this->getBuilder(),
         );
@@ -33,7 +33,7 @@ class QuestionProcessorTest extends TestCase
     }
     public function testInvalidFields(): void
     {
-        $processor = new QuestionProcessor(
+        $processor = new TicketProcessor(
             $this->getSanitizer(),
             $this->getBuilder(),
         );
@@ -43,13 +43,13 @@ class QuestionProcessorTest extends TestCase
     }
 
 
-    private function getSanitizer(): QuestionSanitizer
+    private function getSanitizer(): TicketSanitizer
     {
-        return new QuestionSanitizer($this->getHost());
+        return new TicketSanitizer($this->getHost());
     }
-    private function getBuilder(): QuestionsBuilder
+    private function getBuilder(): TicketBuilder
     {
-        return new QuestionsBuilder();
+        return new TicketBuilder();
     }
 
     private function getValidQuestions(): array

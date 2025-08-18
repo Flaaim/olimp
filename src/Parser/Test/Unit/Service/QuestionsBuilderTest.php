@@ -3,7 +3,7 @@
 namespace App\Parser\Test\Unit\Service;
 
 use App\Parser\Entity\Ticket\Question;
-use App\Parser\Service\QuestionsBuilder;
+use App\Parser\Service\TicketBuilder;
 use PHPUnit\Framework\TestCase;
 
 class QuestionsBuilderTest extends TestCase
@@ -11,7 +11,7 @@ class QuestionsBuilderTest extends TestCase
 
     public function testSuccess(): void
     {
-        $questions = (new QuestionsBuilder())->build($this->getValidQuestions());
+        $questions = (new TicketBuilder())->build($this->getValidQuestions());
 
         $this->assertNotNull($questions);
         $this->assertInstanceOf(Question::class, $questions[0]);

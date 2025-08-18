@@ -4,21 +4,21 @@ namespace App\Parser\Test\Unit\Service;
 
 use App\Parser\Entity\Parser\Host;
 use App\Parser\Entity\Parser\HostMapper;
-use App\Parser\Service\QuestionSanitizer;
+use App\Parser\Service\TicketSanitizer;
 use PHPUnit\Framework\TestCase;
 
 class QuestionSanitizerTest extends TestCase
 {
     public function testSuccess(): void
     {
-        $sanitized = (new QuestionSanitizer($this->getHost()))->sanitize($this->getQuestionsWithTags());
+        $sanitized = (new TicketSanitizer($this->getHost()))->sanitize($this->getQuestionsWithTags());
 
         $this->assertEquals($this->getSanitizedQuestions(), $sanitized);
     }
 
     public function testGetImagePath(): void
     {
-        $sanitized = (new QuestionSanitizer($this->getHost()))->sanitize($this->getQuestionsWithTags());
+        $sanitized = (new TicketSanitizer($this->getHost()))->sanitize($this->getQuestionsWithTags());
 
         $this->assertEquals($this->getSanitizedQuestions(), $sanitized);
     }

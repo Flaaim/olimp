@@ -4,7 +4,7 @@ namespace App\Parser\Service;
 
 use App\Parser\Entity\Parser\Host;
 
-final class QuestionSanitizer
+final class TicketSanitizer
 {
     private Host $host;
     public function __construct(Host $host)
@@ -22,7 +22,6 @@ final class QuestionSanitizer
             $rawQuestions
         );
     }
-
     private function getImagePath(string $img): string
     {
         if (preg_match('/src="\/([^"]+)"/', $img, $matches)) {

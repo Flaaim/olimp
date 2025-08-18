@@ -2,10 +2,10 @@
 
 namespace App\Parser\Service;
 
+use App\Parser\Entity\Ticket\Answer;
 use App\Parser\Entity\Ticket\Question;
-use Webmozart\Assert\Assert;
 
-final class QuestionsBuilder
+final class TicketBuilder
 {
     public function build(array $questionData): array
     {
@@ -15,8 +15,20 @@ final class QuestionsBuilder
                 $questionData['Number'],
                 $questionData['Text'],
                 $questionData['QuestionMainImg'],
+                $this->buildAnswers($questionData['answers'])
             ),
             $questionData
+        );
+    }
+
+    public function buildAnswers(array $answerData): array
+    {
+        return array_map(
+            fn($answerData): Answer => new Answer(
+                $answerData['Text'],
+                $answerData['Correct'],
+            ),
+            $answerData
         );
     }
 }
