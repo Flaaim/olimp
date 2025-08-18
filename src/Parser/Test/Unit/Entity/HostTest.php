@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 
 class HostTest extends TestCase
 {
-    private array $hosts;
     public function testSuccess(): void
     {
 
@@ -34,7 +33,7 @@ class HostTest extends TestCase
         $host = new Host($value = 'http://olimpoks.chukk.ru:82/', $this->getHostMapper());
         $fullPath = 'http://olimpoks.chukk.ru:82/Admin/Info/GetTicketInfo/';
 
-        $this->assertSame($fullPath, $host->getFullPathToCourse());
+        $this->assertSame($fullPath, $host->getFullPathToTicket());
 
     }
 
