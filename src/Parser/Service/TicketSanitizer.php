@@ -18,6 +18,14 @@ final class TicketSanitizer
                 ...$questionData,
                 'Text' => $this->stripTagsTextField($questionData['Text']),
                 'QuestionMainImg' => $this->getImagePath($questionData['QuestionMainImg']),
+                'answers' => array_map(
+                    fn ($answerData) => [
+                        ...$answerData,
+                        'Text' => $this->handleAnswerText($answerData['Text']),
+                        'Correct' => $answerData['Correct'],
+                    ],
+                    $questionData['answers']
+                )
             ],
             $rawQuestions
         );
@@ -38,5 +46,20 @@ final class TicketSanitizer
     private function normalizeWhitespace(string $text): string
     {
         return trim(preg_replace('/\s+/', ' ', $text));
+    }
+
+    private function handleAnswerText(string $text): string
+    {
+        if(preg_match('/src="\/(.+?)".*?<div>"(.+?)"<\/div>/s', $text, $matches)) {
+            if(count($matches) === 3) {
+                return $this->createImgTag($matches[1]) . ' - ' . $matches[2];
+            }
+        }
+        return $this->stripTagsTextField($text);
+    }
+
+    private function createImgTag(string $url): string
+    {
+        return '<img src="' . $this->host->getValue(). $url . '">';
     }
 }
