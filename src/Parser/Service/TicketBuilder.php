@@ -15,20 +15,15 @@ final class TicketBuilder
                 $questionData['Number'],
                 $questionData['Text'],
                 $questionData['QuestionMainImg'],
-                $this->buildAnswers($questionData['answers'])
+                array_map(
+                    fn($answerData): Answer => new Answer(
+                        $answerData['Text'],
+                        $answerData['Correct'],
+                    ),
+                    $questionData['answers']
+                )
             ),
             $questionData
-        );
-    }
-
-    public function buildAnswers(array $answerData): array
-    {
-        return array_map(
-            fn($answerData): Answer => new Answer(
-                $answerData['Text'],
-                $answerData['Correct'],
-            ),
-            $answerData
         );
     }
 }
