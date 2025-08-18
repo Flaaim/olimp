@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Parser\Command\Parse\Request;
+namespace App\Parser\Command\QuestionParse\Request;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
@@ -35,7 +35,6 @@ class Handler
             throw new \Exception($e->getMessage(), $e->getCode());
         }
     }
-
     private function parseResponse(string $content): array
     {
         return json_decode($content, true) ?? [];

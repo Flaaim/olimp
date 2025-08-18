@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Parser\Command\Parse\Request;
+namespace App\Parser\Command\QuestionParse\Request;
 
 use App\Parser\Entity\Parser\Parser;
 
