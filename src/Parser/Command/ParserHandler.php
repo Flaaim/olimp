@@ -10,10 +10,10 @@ use App\Parser\Command\Process\Request\Handler as ProcessHandler;
 use App\Parser\Command\AnswerParse\Request\Handler as AnswerParser;
 use App\Parser\Command\AnswerParse\Request\Command as AnswersCommand;
 use App\Parser\Entity\Parser\Options;
-use App\Parser\Service\QuestionProcessor;
-use App\Parser\Service\QuestionSanitizer;
-use App\Parser\Service\QuestionsBuilder;
-
+use App\Parser\Service\TicketProcessor;
+use App\Parser\Service\TicketSanitizer;
+use App\Parser\Service\TicketBuilder;
+use App\Parser\Service\TicketValidator;
 
 
 class ParserHandler
@@ -36,6 +36,7 @@ class ParserHandler
                 new Options($parserCommand->options)
             )
         );
+
         $questionWithAnswers = $this->answerParser->handle(
             new AnswersCommand(
                 $questions,
@@ -43,9 +44,10 @@ class ParserHandler
             )
         );
 
-        $ticket = (new QuestionProcessor(
-            new QuestionSanitizer($parser->getHost()),
-            new QuestionsBuilder()
+        $ticket = (new TicketProcessor(
+            new TicketSanitizer($parser->getHost()),
+            new TicketBuilder(),
+            new TicketValidator()
         ))->createTicket($questionWithAnswers);
 
         return $ticket->getQuestions();
