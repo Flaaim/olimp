@@ -10,7 +10,8 @@
         "symfony/console": "^6.4",
         "ramsey/uuid": "^4.9",
         "webmozart/assert": "^1.11",
-        "guzzlehttp/guzzle": "^7.0"
+        "guzzlehttp/guzzle": "^7.0",
+        "slim/twig-view": "^3.4"
     },
     "autoload": {
       "psr-4": {
