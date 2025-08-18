@@ -7,6 +7,7 @@ use Webmozart\Assert\Assert;
 class Host
 {
     public const PATH_TO_COURSE = 'Admin/Info/GetTicketInfo/';
+    public const PATH_TO_ANSWERS = 'Admin/Archive/QuestionInfo';
     private string $value;
 
     public function __construct(string $value, HostMapper $mapper)
@@ -22,5 +23,9 @@ class Host
     public function getFullPathToCourse(): string
     {
         return $this->value . self::PATH_TO_COURSE;
+    }
+    public function getFullPathToAnswers(): string
+    {
+        return $this->value . self::PATH_TO_ANSWERS;
     }
 }
