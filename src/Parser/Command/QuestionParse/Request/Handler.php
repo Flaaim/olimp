@@ -14,7 +14,7 @@ class Handler
         $parser = $command->parser;
 
         try{
-            $response  = $this->client->post($parser->getHost()->getFullPathToCourse(), [
+            $response  = $this->client->post($parser->getHost()->getFullPathToTicket(), [
                     'form_params' => [
                         'branchId' => $parser->getCourse()->getId(),
                         'ticketId' => $parser->getCourse()->getTicketId(),

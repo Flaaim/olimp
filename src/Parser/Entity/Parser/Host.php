@@ -6,7 +6,7 @@ use Webmozart\Assert\Assert;
 
 class Host
 {
-    public const PATH_TO_COURSE = 'Admin/Info/GetTicketInfo/';
+    public const PATH_TO_TICKET = 'Admin/Info/GetTicketInfo/';
     public const PATH_TO_ANSWERS = 'Admin/Archive/QuestionInfo';
     private string $value;
 
@@ -20,9 +20,9 @@ class Host
     {
         return $this->value;
     }
-    public function getFullPathToCourse(): string
+    public function getFullPathToTicket(): string
     {
-        return $this->value . self::PATH_TO_COURSE;
+        return $this->value . self::PATH_TO_TICKET;
     }
     public function getFullPathToAnswers(): string
     {
