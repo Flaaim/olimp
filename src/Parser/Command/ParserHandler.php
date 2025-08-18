@@ -3,10 +3,12 @@
 namespace App\Parser\Command;
 
 use App\Parser\Command\Input\Request\Handler as InputHandler;
-use App\Parser\Command\Parse\Request\Command as ParseCommand;
-use App\Parser\Command\Parse\Request\Handler as ParseHandler;
+use App\Parser\Command\QuestionParse\Request\Command as QuestionCommand;
+use App\Parser\Command\QuestionParse\Request\Handler as QuestionParser;
 use App\Parser\Command\Process\Request\Command as ProcessCommand;
 use App\Parser\Command\Process\Request\Handler as ProcessHandler;
+use App\Parser\Command\AnswerParse\Request\Handler as AnswerParser;
+use App\Parser\Command\AnswerParse\Request\Command as AnswersCommand;
 use App\Parser\Entity\Parser\Options;
 use App\Parser\Service\QuestionProcessor;
 use App\Parser\Service\QuestionSanitizer;
@@ -18,14 +20,15 @@ class ParserHandler
 {
     public function __construct(
         private readonly InputHandler        $inputHandler,
-        private readonly ParseHandler        $parseHandler,
+        private readonly QuestionParser      $questionParser,
         private readonly ProcessHandler      $processHandler,
+        private readonly AnswerParser        $answerParser,
     )
     {}
     public function handle(ParserCommand $parserCommand): array
     {
         $parser = $this->inputHandler->handle($parserCommand);
-        $rawData = $this->parseHandler->handle(new ParseCommand($parser));
+        $rawData = $this->questionParser->handle(new QuestionCommand($parser));
 
         $questions = $this->processHandler->handle(
             new ProcessCommand(
@@ -33,12 +36,19 @@ class ParserHandler
                 new Options($parserCommand->options)
             )
         );
+        $questionWithAnswers = $this->answerParser->handle(
+            new AnswersCommand(
+                $questions,
+                $parser,
+            )
+        );
 
         $ticket = (new QuestionProcessor(
             new QuestionSanitizer($parser->getHost()),
             new QuestionsBuilder()
-        ))->createTicket($questions);
+        ))->createTicket($questionWithAnswers);
 
         return $ticket->getQuestions();
     }
 }
+
