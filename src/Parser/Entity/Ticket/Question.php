@@ -2,20 +2,22 @@
 
 namespace App\Parser\Entity\Ticket;
 
-use App\Parser\Entity\Parser\Id;
+use ArrayObject;
 
-class Question
+final class Question
 {
     private string $id;
     private string $number;
     private string $text;
-    private ?string $questionMainImg;
-    public function __construct(string $id, string $number, string $text, string $questionMainImg)
+    private string $questionMainImg;
+    private ArrayObject $answers;
+    public function __construct(string $id, string $number, string $text, string $questionMainImg, array $answers)
     {
         $this->id = $id;
         $this->number = $number;
         $this->text = $text;
         $this->questionMainImg = $questionMainImg;
+        $this->answers = new ArrayObject($answers);
     }
     public function getId(): string
     {
@@ -32,5 +34,16 @@ class Question
     public function getQuestionMainImg(): string
     {
         return $this->questionMainImg;
+    }
+    public function getAnswers(): array
+    {
+        $result = [];
+        foreach ($this->answers as $answer) {
+            $result[] = [
+                'Text' => $answer->getText(),
+                'Correct' => $answer->isCorrect(),
+            ];
+        }
+        return $result;
     }
 }

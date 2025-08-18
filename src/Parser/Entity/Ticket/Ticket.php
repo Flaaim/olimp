@@ -5,7 +5,7 @@ namespace App\Parser\Entity\Ticket;
 use App\Parser\Entity\Parser\Id;
 use ArrayObject;
 
-class Ticket
+final class Ticket
 {
     private Id $id;
     private ArrayObject $questions;
@@ -27,7 +27,8 @@ class Ticket
                 'id' => $question->getId(),
                 'number' => $question->getNumber(),
                 'text' => $question->getText(),
-                'image' => $question->getQuestionMainImg()
+                'image' => $question->getQuestionMainImg(),
+                'answers' => $question->getAnswers(),
             ];
         }
         return $result;
