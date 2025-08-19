@@ -19,5 +19,9 @@
   "bugs": {
     "url": "https://github.com/Flaaim/olimp/issues"
   },
-  "homepage": "https://github.com/Flaaim/olimp#readme"
+  "homepage": "https://github.com/Flaaim/olimp#readme",
+  "type": "commonjs",
+  "dependencies": {
+    "alpine": "^0.2.1"
+  }
 }
