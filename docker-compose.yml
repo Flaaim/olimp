@@ -23,3 +23,12 @@ services:
       context: docker/php-cli
     volumes:
       - ./:/app
+
+  node:
+    build:
+      context: docker/node
+    volumes:
+      - ./:/app
+    command: npm run dev
+    environment:
+      - NODE_ENV=development
