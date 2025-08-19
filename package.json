@@ -22,6 +22,6 @@
   "homepage": "https://github.com/Flaaim/olimp#readme",
   "type": "commonjs",
   "dependencies": {
-    "alpine": "^0.2.1"
+    "alpinejs": "^3.14.9"
   }
 }
