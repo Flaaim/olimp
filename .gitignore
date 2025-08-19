@@ -3,3 +3,4 @@ config/common/env
 .idea
 var
 .phpunit.cache
+node_modules
