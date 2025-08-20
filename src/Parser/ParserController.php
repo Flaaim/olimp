@@ -8,6 +8,7 @@ use App\Parser\Command\ParserHandler;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Views\Twig;
 
 
 class ParserController
@@ -31,8 +32,6 @@ class ParserController
 
             $result = $this->parserHandler->handle($command);
             return new JsonResponse($result, 200);
-        }catch (GuzzleException $e){
-            return new JsonResponse($e->getMessage(), 400);
         } catch (\InvalidArgumentException $e){
             return new JsonResponse($e->getMessage(), 400);
         } catch (\RuntimeException|\Exception $e){
@@ -40,5 +39,10 @@ class ParserController
         }
     }
 
+    public function showResults(Request $request, Response $response): Response
+    {
+        $view = Twig::fromRequest($request);
 
+        return $view->render($response, "pages/parse/result.twig", []);
+    }
 }

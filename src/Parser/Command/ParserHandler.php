@@ -14,6 +14,7 @@ use App\Parser\Service\TicketProcessor;
 use App\Parser\Service\TicketSanitizer;
 use App\Parser\Service\TicketBuilder;
 use App\Parser\Service\TicketValidator;
+use GuzzleHttp\Exception\GuzzleException;
 
 
 class ParserHandler
@@ -27,30 +28,41 @@ class ParserHandler
     {}
     public function handle(ParserCommand $parserCommand): array
     {
-        $parser = $this->inputHandler->handle($parserCommand);
-        $rawData = $this->questionParser->handle(new QuestionCommand($parser));
+        try {
+            $parser = $this->inputHandler->handle($parserCommand);
+            $rawData = $this->questionParser->handle(new QuestionCommand($parser));
 
-        $questions = $this->processHandler->handle(
-            new ProcessCommand(
-                $rawData,
-                new Options($parserCommand->options)
-            )
-        );
+            $questions = $this->processHandler->handle(
+                new ProcessCommand(
+                    $rawData,
+                    new Options($parserCommand->options)
+                )
+            );
 
-        $questionWithAnswers = $this->answerParser->handle(
-            new AnswersCommand(
-                $questions,
-                $parser,
-            )
-        );
+            $questionWithAnswers = $this->answerParser->handle(
+                new AnswersCommand(
+                    $questions,
+                    $parser,
+                )
+            );
 
-        $ticket = (new TicketProcessor(
-            new TicketSanitizer($parser->getHost()),
-            new TicketBuilder(),
-            new TicketValidator()
-        ))->createTicket($questionWithAnswers);
+            $ticket = (new TicketProcessor(
+                new TicketSanitizer($parser->getHost()),
+                new TicketBuilder(),
+                new TicketValidator()
+            ))->createTicket($questionWithAnswers);
 
-        return $ticket->getQuestions();
+            return $ticket->getQuestions();
+        } catch(GuzzleException $e){
+            throw new \RuntimeException(
+                'Failed to fetch data: ' . $e->getMessage(),
+                $e->getCode(),
+                $e
+            );
+        }catch (\Exception $e){
+            throw new \Exception($e->getMessage(), $e->getCode());
+        }
+
     }
 }
 

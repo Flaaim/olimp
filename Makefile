@@ -15,19 +15,13 @@ docker-pull:
 docker-build-pull:
 	docker-compose build --pull
 
-app-init: composer-install npm-install
+app-init: composer-install
 
 composer-install:
 	docker-compose run --rm php-cli composer install
 
 composer-update:
 	docker-compose run --rm php-cli composer update
-
-npm-install:
-	docker-compose run --rm node npm install
-
-npm-update:
-	docker-compose run --rm node npm update
 
 app-lint:
 	docker-compose run --rm php-cli composer lint
