@@ -50,16 +50,22 @@ final class TicketSanitizer
 
     private function handleAnswerText(string $text): string
     {
-        if(preg_match('/src="\/(.+?)".*?<div>"(.+?)"<\/div>/s', $text, $matches)) {
-            if(count($matches) === 3) {
-                return $this->createImgTag($matches[1]) . ' - ' . $matches[2];
-            }
-        }
-        return $this->stripTagsTextField($text);
+        $img = $this->handleImg($text);
+        return $this->stripTagsTextField($text) . $img;
     }
 
     private function createImgTag(string $url): string
     {
         return '<img src="' . $this->host->getValue(). $url . '">';
+    }
+
+    private function handleImg(string $text): string
+    {
+        if(preg_match('/src=\"\/(.+?)\"/s', $text, $matches)) {
+            if(isset($matches[1])) {
+                return $this->createImgTag($matches[1]);
+            }
+        }
+        return '';
     }
 }
