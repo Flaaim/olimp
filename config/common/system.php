@@ -12,7 +12,9 @@ return [
         'debug' => (bool)getenv('APP_DEBUG'),
         'hosts' => [
             'http://prk.kuzstu.ru:9001/',
-            'http://olimpoks.chukk.ru:82/'
+            'http://olimpoks.chukk.ru:82/',
+            'http://olimpoks5.krsk.irgups.ru/',
+            'http://cpkchita.ru:9001/'
         ]
     ],
     ResponseFactoryInterface::class => Di\get(ResponseFactory::class),
