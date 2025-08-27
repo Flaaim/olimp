@@ -23,6 +23,7 @@ final class Ticket
     {
         $result = [];
         foreach ($this->questions as $question) {
+            /** @var Question $question */
             $result[] = [
                 'id' => $question->getId(),
                 'number' => $question->getNumber(),

@@ -19,6 +19,7 @@ final class TicketBuilder
                     fn($answerData): Answer => new Answer(
                         $answerData['Text'],
                         $answerData['Correct'],
+                        $answerData['Img']
                     ),
                     $questionData['answers']
                 )

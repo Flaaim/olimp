@@ -39,9 +39,11 @@ final class Question
     {
         $result = [];
         foreach ($this->answers as $answer) {
+            /** @var Answer $answer */
             $result[] = [
                 'Text' => $answer->getText(),
                 'Correct' => $answer->isCorrect(),
+                'Img' => $answer->getImg(),
             ];
         }
         return $result;

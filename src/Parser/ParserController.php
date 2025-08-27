@@ -38,11 +38,4 @@ class ParserController
             return new JsonResponse($e->getMessage(), 500);
         }
     }
-
-    public function showResults(Request $request, Response $response): Response
-    {
-        $view = Twig::fromRequest($request);
-
-        return $view->render($response, "pages/parse/result.twig", []);
-    }
 }

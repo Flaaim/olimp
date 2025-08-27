@@ -5,6 +5,7 @@ namespace App\Parser\Test\Unit\Service;
 use App\Parser\Entity\Parser\Host;
 use App\Parser\Entity\Parser\HostMapper;
 use App\Parser\Entity\Ticket\Ticket;
+use App\Parser\Service\TicketImageHandler;
 use App\Parser\Service\TicketProcessor;
 use App\Parser\Service\TicketSanitizer;
 use App\Parser\Service\TicketBuilder;
@@ -18,7 +19,8 @@ class TicketProcessorTest extends TestCase
         $processor = new TicketProcessor(
             $this->getSanitizer(),
             $this->getBuilder(),
-            $this->getTicketValidator()
+            $this->getTicketValidator(),
+            $this->getTicketImageHandler()
         );
 
         $this->assertInstanceOf(Ticket::class, $processor->createTicket($this->getValidQuestions()));
@@ -29,7 +31,8 @@ class TicketProcessorTest extends TestCase
         $processor = new TicketProcessor(
             $this->getSanitizer(),
             $this->getBuilder(),
-            $this->getTicketValidator()
+            $this->getTicketValidator(),
+            $this->getTicketImageHandler()
         );
         $this->expectException(\InvalidArgumentException::class);
         $processor->createTicket([]);
@@ -39,7 +42,8 @@ class TicketProcessorTest extends TestCase
         $processor = new TicketProcessor(
             $this->getSanitizer(),
             $this->getBuilder(),
-            $this->getTicketValidator()
+            $this->getTicketValidator(),
+            $this->getTicketImageHandler()
         );
         $this->expectException(\InvalidArgumentException::class);
         $processor->createTicket($this->getInvalidQuestions());
@@ -49,7 +53,7 @@ class TicketProcessorTest extends TestCase
 
     private function getSanitizer(): TicketSanitizer
     {
-        return new TicketSanitizer($this->getHost());
+        return new TicketSanitizer();
     }
     private function getBuilder(): TicketBuilder
     {
@@ -58,6 +62,11 @@ class TicketProcessorTest extends TestCase
     private function getTicketValidator(): TicketValidator
     {
         return new TicketValidator();
+    }
+
+    private function getTicketImageHandler(): TicketImageHandler
+    {
+        return new TicketImageHandler($this->getHost());
     }
     private function getValidQuestions(): array
     {

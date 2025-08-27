@@ -10,6 +10,7 @@ use App\Parser\Command\Process\Request\Handler as ProcessHandler;
 use App\Parser\Command\AnswerParse\Request\Handler as AnswerParser;
 use App\Parser\Command\AnswerParse\Request\Command as AnswersCommand;
 use App\Parser\Entity\Parser\Options;
+use App\Parser\Service\TicketImageHandler;
 use App\Parser\Service\TicketProcessor;
 use App\Parser\Service\TicketSanitizer;
 use App\Parser\Service\TicketBuilder;
@@ -47,9 +48,10 @@ class ParserHandler
             );
 
             $ticket = (new TicketProcessor(
-                new TicketSanitizer($parser->getHost()),
+                new TicketSanitizer(),
                 new TicketBuilder(),
-                new TicketValidator()
+                new TicketValidator(),
+                new TicketImageHandler($parser->getHost()),
             ))->createTicket($questionWithAnswers);
 
             return $ticket->getQuestions();
