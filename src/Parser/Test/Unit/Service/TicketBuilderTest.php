@@ -34,19 +34,23 @@ class TicketBuilderTest extends TestCase
                 'answers' => [
                     [
                         "Text" => "<div><div>Кабель должен быть в кислостойком шланге</div></div>",
-                        "Correct" => true
+                        "Correct" => true,
+                        'Img' => ''
                     ],
                     [
                         "Text" => "<div><div><div>Кабель должен иметь не более 3 скруток</div></div></div>",
-                        "Correct" => false
+                        "Correct" => false,
+                        'Img' => ''
                     ],
                     [
                         "Text" => "<div><div>Кабель должен быть только в тканевой оплетке</div></div>",
-                        "Correct" => false
+                        "Correct" => false,
+                        'Img' => ''
                     ],
                     [
                         "Text" => "<div><div>Кабель должен быть длиной не более 1,5 м</div></div>",
-                        "Correct" => false
+                        "Correct" => false,
+                        'Img' => ''
                     ]
                 ]
 

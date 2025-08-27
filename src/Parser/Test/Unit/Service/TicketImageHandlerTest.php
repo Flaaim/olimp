@@ -4,32 +4,34 @@ namespace App\Parser\Test\Unit\Service;
 
 use App\Parser\Entity\Parser\Host;
 use App\Parser\Entity\Parser\HostMapper;
-use App\Parser\Service\TicketSanitizer;
+use App\Parser\Service\TicketImageHandler;
 use PHPUnit\Framework\TestCase;
 
-class TicketSanitizerTest extends TestCase
+class TicketImageHandlerTest extends TestCase
 {
     public function testSuccess(): void
     {
-        $sanitized = (new TicketSanitizer())->sanitize($this->getQuestionsWithTags());
+        $handler = (new TicketImageHandler($this->getHost()))->handle($this->getQuestionsWithTags());
 
-        $this->assertEquals($this->getSanitizedQuestions(), $sanitized);
+        $this->assertEquals($this->getQuestionsWithHandledImages(), $handler);
     }
+
+
 
     private function getQuestionsWithTags(): array
     {
         return [
             [
-                'Text' => '<div><div>Как с минимальным риском подняться на крышу здания?</div></div>',
+                'Text' => '',
                 'QuestionMainImg' => '',
                 'answers' => [
                     [
-                        "Text" => "<div><div>Кабель должен быть в кислостойком шланге</div></div>",
+                        "Text" => "",
                         "Correct" => true,
                         "Img" => null
                     ],
                     [
-                        "Text" => "<div><div><div>Кабель должен иметь не более 3 скруток</div></div></div>",
+                        "Text" => "",
                         "Correct" => false,
                         "Img" => null
                     ],
@@ -48,36 +50,45 @@ class TicketSanitizerTest extends TestCase
         ];
     }
 
-    private function getSanitizedQuestions(): array
+    public function getQuestionsWithHandledImages(): array
     {
         return [
-            array(
-                'Text' => 'Как с минимальным риском подняться на крышу здания?',
+            [
+                'Text' => '',
                 'QuestionMainImg' => '',
                 'answers' => [
                     [
-                        "Text" => "Кабель должен быть в кислостойком шланге",
+                        "Text" => "",
                         "Correct" => true,
-                        "Img" => null
+                        "Img" => ""
                     ],
                     [
-                        "Text" => "Кабель должен иметь не более 3 скруток",
+                        "Text" => "",
                         "Correct" => false,
-                        "Img" => null
+                        "Img" => ""
                     ],
                     [
-                        "Text" => '"Запрещается прикасаться. Опасно"',
+                        "Text" => "<div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><img src=\"/QuestionImages/81703c22-7f8e-4a37-9591-e0d59f4fc093/8/1.jpg\" width=\"350\" height=\"191\" xmlns:xd=\"http://schemas.microsoft.com/office/infopath/2003\" xd:content-type=\"png\" /></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div>-<div><div>\"Запрещается прикасаться. Опасно\"</div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div>",
                         "Correct" => false,
-                        "Img" => null
+                        "Img" => "<img src=\"{$this->getHost()->getValue()}QuestionImages/81703c22-7f8e-4a37-9591-e0d59f4fc093/8/1.jpg\">"
                     ],
                     [
-                        "Text" => '"Осторожно. Возможно травмирование рук"',
+                        "Text" => "<div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><img src=\"/QuestionImages/81703c22-7f8e-4a37-9591-e0d59f4fc093/8/2.jpg\" width=\"350\" height=\"191\" data-mce-selected=\"1\" xmlns:xd=\"http://schemas.microsoft.com/office/infopath/2003\" xd:content-type=\"png\" /></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div>-<div>\"Осторожно. Возможно травмирование рук\"</div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div>",
                         "Correct" => false,
-                        "Img" => null
+                        "Img" => "<img src=\"{$this->getHost()->getValue()}QuestionImages/81703c22-7f8e-4a37-9591-e0d59f4fc093/8/2.jpg\">"
                     ]
                 ]
-            )
+            ]
         ];
     }
 
+    private function getHost(): Host
+    {
+        $hosts = [
+            'http://prk.kuzstu.ru:9001/',
+            'http://olimpoks.chukk.ru:82/'
+        ];
+        $mapper = new HostMapper($hosts);
+        return new Host('http://olimpoks.chukk.ru:82/', $mapper);
+    }
 }
