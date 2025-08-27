@@ -17,12 +17,17 @@ services:
     environment:
       APP_DEBUG: 1
       APP_ENV: dev
+      DB_URL: pgsql://app:secret@api-postgres:5432/app
 
   php-cli:
     build:
       context: docker/php-cli
     volumes:
       - ./:/app
+    environment:
+      APP_DEBUG: 1
+      APP_ENV: dev
+      DB_URL: pgsql://app:secret@api-postgres:5432/app
 
   postgres:
     image: postgres:12.2-alpine
