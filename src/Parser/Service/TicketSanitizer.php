@@ -2,10 +2,13 @@
 
 namespace App\Parser\Service;
 
-use App\Parser\Entity\Parser\Host;
+use App\Service\TextSanitizer;
 
 final class TicketSanitizer
 {
+    public function __construct(private readonly TextSanitizer $sanitizer)
+    {}
+
     public function sanitize(array $rawQuestions): array
     {
         return array_map(
@@ -28,23 +31,10 @@ final class TicketSanitizer
     }
     private function cleanTextContent(string $text): string
     {
-        // Убираем HTML теги, но оставляем переносы строк
-        $cleaned = strip_tags($text, '<br>');
-
-        // Заменяем <br> на переносы строк
-        $cleaned = str_replace(['<br>', '<br/>', '<br />'], "\n", $cleaned);
-
-        // Убираем лишние пробелы и переносы
-        $cleaned = preg_replace('/\s+/', ' ', $cleaned);
-
-        // Убираем дефисы в начале и конце
-        $cleaned = preg_replace('/^-|-$/', '', $cleaned);
-
-        return trim($cleaned);
+        return $this->sanitizer->cleanTextContent($text);
     }
-
     private function handleAnswerText(string $text): string
     {
-        return $this->cleanTextContent($text);
+       return $this->sanitizer->cleanTextContent($text);
     }
 }
