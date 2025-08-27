@@ -2,14 +2,12 @@
 
 declare(strict_types=1);
 
-$files = glob(__DIR__ . '/common/*.php');
+use Laminas\ConfigAggregator\ConfigAggregator;
+use Laminas\ConfigAggregator\PhpFileProvider;
 
+$aggregator  = new ConfigAggregator([
+    new PhpFileProvider(__DIR__ . '/common/*.php'),
+    new PhpFileProvider(__DIR__ . '/' . (getenv('APP_ENV') ?: 'prod') . '/*.php'),
+]);
 
-$configs = array_map(
-    static function ($file){
-        return require $file;
-    },
-    $files
-);
-
-return array_merge_recursive(...$configs);
+return $aggregator->getMergedConfig();

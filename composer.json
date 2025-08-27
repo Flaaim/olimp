@@ -11,7 +11,8 @@
         "ramsey/uuid": "^4.9",
         "webmozart/assert": "^1.11",
         "guzzlehttp/guzzle": "^7.0",
-        "doctrine/orm": "^3.5"
+        "doctrine/orm": "^3.5",
+        "laminas/laminas-config-aggregator": "^1.18"
     },
     "autoload": {
       "psr-4": {
