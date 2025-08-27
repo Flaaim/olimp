@@ -2,16 +2,15 @@
 
 namespace App\Parser\Test\Unit\Service;
 
-use App\Parser\Entity\Parser\Host;
-use App\Parser\Entity\Parser\HostMapper;
 use App\Parser\Service\TicketSanitizer;
+use App\Service\TextSanitizer;
 use PHPUnit\Framework\TestCase;
 
 class TicketSanitizerTest extends TestCase
 {
     public function testSuccess(): void
     {
-        $sanitized = (new TicketSanitizer())->sanitize($this->getQuestionsWithTags());
+        $sanitized = (new TicketSanitizer(new TextSanitizer()))->sanitize($this->getQuestionsWithTags());
 
         $this->assertEquals($this->getSanitizedQuestions(), $sanitized);
     }

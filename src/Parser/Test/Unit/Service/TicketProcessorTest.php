@@ -10,6 +10,7 @@ use App\Parser\Service\TicketProcessor;
 use App\Parser\Service\TicketSanitizer;
 use App\Parser\Service\TicketBuilder;
 use App\Parser\Service\TicketValidator;
+use App\Service\TextSanitizer;
 use PHPUnit\Framework\TestCase;
 
 class TicketProcessorTest extends TestCase
@@ -53,7 +54,7 @@ class TicketProcessorTest extends TestCase
 
     private function getSanitizer(): TicketSanitizer
     {
-        return new TicketSanitizer();
+        return new TicketSanitizer(new TextSanitizer());
     }
     private function getBuilder(): TicketBuilder
     {
@@ -112,11 +113,6 @@ class TicketProcessorTest extends TestCase
                 'umber' => 1,
                 'Text' => '<div><div>Как с минимальным риском подняться на крышу здания?</div></div>',
                 'QuestionMainImg' => '<div><div><img style="width: 300px;" src="/QuestionImages/c35375/26a4ddb9-a4d0-4519-b0ff-bc428fb2113e/8/1.jpg" xmlns:xd="http://schemas.microsoft.com/office/infopath/2003" xd:content-type="png" /></div></div>',
-                'answers' => [
-                    "__type" => "<>f__AnonymousType0`2[[System.String, mscorlib],[System.Boolean, mscorlib]], Olimp.Archive",
-                    "Text" => "<div><div>Кабель должен быть в кислостойком шланге</div></div>",
-                    "Correct" => true
-                ]
             ]
         ];
     }
