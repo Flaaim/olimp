@@ -6,17 +6,21 @@ use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\UnderscoreNamingStrategy;
+use Doctrine\ORM\ORMSetup;
+use Doctrine\ORM\Tools\Console\EntityManagerProvider;
+use Doctrine\ORM\Tools\Console\EntityManagerProvider\SingleManagerProvider;
 use Psr\Container\ContainerInterface;
+use Symfony\Component\Cache\CacheItem;
 
 return [
     EntityManagerInterface::class => function (ContainerInterface $container) {
         $settings = $container->get('config')['doctrine'];
 
-        $config = \Doctrine\ORM\ORMSetup::createAttributeMetadataConfiguration(
+        $config = ORMSetup::createAttributeMetadataConfiguration(
             $settings['metadata_dirs'],
             $settings['dev_mode'],
             $settings['proxy_dir'],
-            $settings['cache_dir']
+            null
         );
 
         $config->setNamingStrategy(new UnderscoreNamingStrategy());
@@ -43,5 +47,8 @@ return [
             ],
             'metadata_dirs' => [],
         ]
-    ]
+    ],
+    EntityManagerProvider::class => function (ContainerInterface $container): SingleManagerProvider {
+        return new SingleManagerProvider($container->get(EntityManagerInterface::class));
+    },
 ];
