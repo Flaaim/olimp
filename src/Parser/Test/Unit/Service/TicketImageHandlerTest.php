@@ -5,13 +5,18 @@ namespace App\Parser\Test\Unit\Service;
 use App\Parser\Entity\Parser\Host;
 use App\Parser\Entity\Parser\HostMapper;
 use App\Parser\Service\TicketImageHandler;
+use App\Service\ImageHandler;
 use PHPUnit\Framework\TestCase;
 
 class TicketImageHandlerTest extends TestCase
 {
     public function testSuccess(): void
     {
-        $handler = (new TicketImageHandler($this->getHost()))->handle($this->getQuestionsWithTags());
+        $handler = (new TicketImageHandler(
+            new ImageHandler(
+                $this->getHost(),
+            )
+        ))->handle($this->getQuestionsWithTags());
 
         $this->assertEquals($this->getQuestionsWithHandledImages(), $handler);
     }

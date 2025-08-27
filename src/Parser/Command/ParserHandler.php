@@ -15,6 +15,8 @@ use App\Parser\Service\TicketProcessor;
 use App\Parser\Service\TicketSanitizer;
 use App\Parser\Service\TicketBuilder;
 use App\Parser\Service\TicketValidator;
+use App\Service\ImageHandler;
+use App\Service\TextSanitizer;
 use GuzzleHttp\Exception\GuzzleException;
 
 
@@ -48,10 +50,16 @@ class ParserHandler
             );
 
             $ticket = (new TicketProcessor(
-                new TicketSanitizer(),
+                new TicketSanitizer(
+                    new TextSanitizer()
+                ),
                 new TicketBuilder(),
                 new TicketValidator(),
-                new TicketImageHandler($parser->getHost()),
+                new TicketImageHandler(
+                    new ImageHandler(
+                        $parser->getHost(),
+                    )
+                ),
             ))->createTicket($questionWithAnswers);
 
             return $ticket->getQuestions();

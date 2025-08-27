@@ -3,11 +3,13 @@
 namespace App\Parser\Service;
 
 use App\Parser\Entity\Parser\Host;
+use App\Service\ImageHandler;
 
 class TicketImageHandler
 {
-
-    public function __construct(private readonly Host $host)
+    public function __construct(
+        private readonly ImageHandler $imageHandler,
+    )
     {}
     public function handle(array $rawQuestions): array
     {
@@ -31,31 +33,11 @@ class TicketImageHandler
     }
     private function extractAndProcessMainImage(string $imageHtml): string
     {
-        if (empty($imageHtml) || !str_contains($imageHtml, '<img')) {
-            return '';
-        }
-
-        // Извлекаем путь к изображению из HTML
-        if (preg_match('/src="\/([^"]+)"/', $imageHtml, $matches)) {
-            return $this->host->getValue() . $matches[1];
-        }
-
-        return $imageHtml;
+       return $this->imageHandler->extractAndProcessMainImage($imageHtml);
     }
 
     private function extractImagesFromContent(string $content): string
     {
-        // Извлекаем все изображения из контента
-        $images = [];
-
-        if (preg_match_all('/<img[^>]+src="\/([^"]+)"[^>]*>/', $content, $matches)) {
-            foreach ($matches[0] as $index => $imgTag) {
-                $imagePath = $matches[1][$index];
-                $absoluteUrl = $this->host->getValue() . $imagePath;
-                $images[] = '<img src="' . $absoluteUrl . '">';
-            }
-        }
-
-        return implode('', $images);
+        return $this->imageHandler->extractImagesFromContent($content);
     }
 }

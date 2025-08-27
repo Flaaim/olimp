@@ -10,6 +10,7 @@ use App\Parser\Service\TicketProcessor;
 use App\Parser\Service\TicketSanitizer;
 use App\Parser\Service\TicketBuilder;
 use App\Parser\Service\TicketValidator;
+use App\Service\ImageHandler;
 use App\Service\TextSanitizer;
 use PHPUnit\Framework\TestCase;
 
@@ -67,7 +68,11 @@ class TicketProcessorTest extends TestCase
 
     private function getTicketImageHandler(): TicketImageHandler
     {
-        return new TicketImageHandler($this->getHost());
+        return new TicketImageHandler(
+            new ImageHandler(
+                $this->getHost()
+            )
+        );
     }
     private function getValidQuestions(): array
     {
