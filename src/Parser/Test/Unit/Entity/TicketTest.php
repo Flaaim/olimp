@@ -2,8 +2,8 @@
 
 namespace App\Parser\Test\Unit\Entity;
 
+use App\Parser\Command\ResponseParse;
 use App\Parser\Entity\Ticket\Ticket;
-use App\Parser\ResponseParse;
 use PHPUnit\Framework\TestCase;
 
 class TicketTest extends TestCase

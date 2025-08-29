@@ -2,19 +2,18 @@
 
 namespace App\Parser\Command;
 
+use App\Parser\Command\AnswerParse\Request\Command as AnswersCommand;
+use App\Parser\Command\AnswerParse\Request\Handler as AnswerParser;
 use App\Parser\Command\Input\Request\Handler as InputHandler;
-use App\Parser\Command\QuestionParse\Request\Command as QuestionCommand;
-use App\Parser\Command\QuestionParse\Request\Handler as QuestionParser;
 use App\Parser\Command\Process\Request\Command as ProcessCommand;
 use App\Parser\Command\Process\Request\Handler as ProcessHandler;
-use App\Parser\Command\AnswerParse\Request\Handler as AnswerParser;
-use App\Parser\Command\AnswerParse\Request\Command as AnswersCommand;
+use App\Parser\Command\QuestionParse\Request\Command as QuestionCommand;
+use App\Parser\Command\QuestionParse\Request\Handler as QuestionParser;
 use App\Parser\Entity\Parser\Options;
-use App\Parser\ResponseParse;
+use App\Parser\Service\TicketBuilder;
 use App\Parser\Service\TicketImageHandler;
 use App\Parser\Service\TicketProcessor;
 use App\Parser\Service\TicketSanitizer;
-use App\Parser\Service\TicketBuilder;
 use App\Parser\Service\TicketValidator;
 use App\Service\ImageHandler;
 use App\Service\TextSanitizer;

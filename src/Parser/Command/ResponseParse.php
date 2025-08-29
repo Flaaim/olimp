@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Parser;
+namespace App\Parser\Command;
 
 use App\Parser\Entity\Ticket\Ticket;
 
