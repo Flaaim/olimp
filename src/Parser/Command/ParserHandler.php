@@ -10,6 +10,7 @@ use App\Parser\Command\Process\Request\Handler as ProcessHandler;
 use App\Parser\Command\AnswerParse\Request\Handler as AnswerParser;
 use App\Parser\Command\AnswerParse\Request\Command as AnswersCommand;
 use App\Parser\Entity\Parser\Options;
+use App\Parser\ResponseParse;
 use App\Parser\Service\TicketImageHandler;
 use App\Parser\Service\TicketProcessor;
 use App\Parser\Service\TicketSanitizer;
@@ -29,7 +30,7 @@ class ParserHandler
         private readonly AnswerParser        $answerParser,
     )
     {}
-    public function handle(ParserCommand $parserCommand): array
+    public function handle(ParserCommand $parserCommand): ResponseParse
     {
         try {
             $parser = $this->inputHandler->handle($parserCommand);
@@ -62,7 +63,8 @@ class ParserHandler
                 ),
             ))->createTicket($questionWithAnswers);
 
-            return $ticket->getQuestions();
+            return ResponseParse::fromTicket($ticket);
+
         } catch(GuzzleException $e){
             throw new \RuntimeException(
                 'Failed to fetch data: ' . $e->getMessage(),
