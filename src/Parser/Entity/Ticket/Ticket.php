@@ -12,7 +12,7 @@ final class Ticket
     private ?string $cipher = null;
     private ?string $name = null;
 
-    public function __construct(Id $id, ArrayObject $questions)
+    public function __construct(Id $id, ArrayObject $questions, ?string $cipher = null, ?string $name = null)
     {
         $this->id = $id;
         $this->questions = $questions;
@@ -20,6 +20,14 @@ final class Ticket
     public function getId(): Id
     {
         return $this->id;
+    }
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+    public function getCipher(): ?string
+    {
+        return $this->cipher;
     }
     public function getQuestions(): array
     {
