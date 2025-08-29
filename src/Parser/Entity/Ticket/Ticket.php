@@ -9,6 +9,8 @@ final class Ticket
 {
     private Id $id;
     private ArrayObject $questions;
+    private ?string $cipher = null;
+    private ?string $name = null;
 
     public function __construct(Id $id, ArrayObject $questions)
     {
