@@ -45,4 +45,13 @@ final class Ticket
         return $result;
     }
 
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            new Id($data['id']),
+            new ArrayObject($data['questions']),
+            $data['cipher'] ?? null,
+            $data['name'] ?? null
+        );
+    }
 }
