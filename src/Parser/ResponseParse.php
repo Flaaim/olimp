@@ -30,7 +30,21 @@ class ResponseParse implements \JsonSerializable
             'id' => $this->id,
             'name' => $this->name,
             'cipher' => $this->cipher,
-            'questions' => $this->questions,
+            'questions' => array_map(
+                fn($question) => [
+                    'id' => $question->getId(),
+                    'number' => $question->getNumber(),
+                    'text' => $question->getText(),
+                    'image' => $question->getQuestionMainImg(),
+                    'answers' => array_map(
+                        fn($answer) => [
+                            'text' => $answer->getText(),
+                            'isCorrect' => $answer->isCorrect(),
+                            'image' => $answer->getImg(),
+                        ], $question->getAnswers()
+                    )
+                ], $this->questions
+            )
         ];
     }
 }

@@ -37,15 +37,6 @@ final class Question
     }
     public function getAnswers(): array
     {
-        $result = [];
-        foreach ($this->answers as $answer) {
-            /** @var Answer $answer */
-            $result[] = [
-                'Text' => $answer->getText(),
-                'Correct' => $answer->isCorrect(),
-                'Img' => $answer->getImg(),
-            ];
-        }
-        return $result;
+        return $this->answers->getArrayCopy();
     }
 }

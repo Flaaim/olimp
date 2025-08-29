@@ -31,25 +31,28 @@ final class Ticket
     }
     public function getQuestions(): array
     {
-        $result = [];
-        foreach ($this->questions as $question) {
-            /** @var Question $question */
-            $result[] = [
-                'id' => $question->getId(),
-                'number' => $question->getNumber(),
-                'text' => $question->getText(),
-                'image' => $question->getQuestionMainImg(),
-                'answers' => $question->getAnswers(),
-            ];
-        }
-        return $result;
+        return $this->questions->getArrayCopy();
     }
 
     public static function fromArray(array $data): self
     {
         return new self(
             new Id($data['id']),
-            new ArrayObject($data['questions']),
+            new ArrayObject(array_map(
+                fn($questionData): Question => new Question(
+                $questionData['id'],
+                $questionData['number'],
+                $questionData['text'],
+                $questionData['image'],
+                array_map(
+                    fn($answerData): Answer => new Answer(
+                        $answerData['text'],
+                        $answerData['isCorrect'],
+                        $answerData['image']
+                    ),
+                    $questionData['answers']
+                )
+            ), $data['questions'])),
             $data['cipher'] ?? null,
             $data['name'] ?? null
         );
