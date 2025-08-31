@@ -20,7 +20,7 @@ class TicketBuilderTest extends TestCase
         $this->assertEquals($this->getValidQuestions()[0]['Number'], $questions[0]->getNumber());
         $this->assertEquals($this->getValidQuestions()[0]['Text'], $questions[0]->getText());
         $this->assertEquals($this->getValidQuestions()[0]['QuestionMainImg'], $questions[0]->getQuestionMainImg());
-        $this->assertEquals($this->getValidQuestions()[0]['answers'], $questions[0]->getAnswers());
+        $this->assertEquals($this->getValidQuestions()[0]['answers'][0]['Text'], $questions[0]->getAnswers()[0]->getText());
 
     }
     private function getValidQuestions(): array

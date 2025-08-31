@@ -4,7 +4,7 @@ namespace App\Parser\Service;
 
 use App\Parser\Entity\Parser\Id;
 use App\Parser\Entity\Ticket\Ticket;
-use ArrayObject;
+use Doctrine\Common\Collections\ArrayCollection;
 use Ramsey\Uuid\Uuid;
 
 class TicketProcessor
@@ -35,7 +35,7 @@ class TicketProcessor
 
         return new Ticket(
             new Id(Uuid::uuid4()->toString()),
-            new ArrayObject($questions)
+            new ArrayCollection($questions)
         );
     }
 }
