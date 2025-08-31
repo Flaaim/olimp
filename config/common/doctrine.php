@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Doctrine\DBAL\DriverManager;
+use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\UnderscoreNamingStrategy;
@@ -25,6 +26,12 @@ return [
 
         $config->setNamingStrategy(new UnderscoreNamingStrategy());
 
+        foreach ($settings['types'] as $name => $class) {
+            if (!Type::hasType($name)) {
+                Type::addType($name, $class);
+            }
+        }
+
         $connection = DriverManager::getConnection(
             $settings['connection'],
             $config
@@ -45,7 +52,12 @@ return [
                 'dbname' => getenv('DB_NAME'),
                 'charset' => 'utf-8'
             ],
-            'metadata_dirs' => [],
+            'metadata_dirs' => [
+                __DIR__ . '/../../src/Parser/Entity/Ticket',
+            ],
+            'types' => [
+                App\Shared\Domain\ValueObject\IdType::NAME => App\Shared\Domain\ValueObject\IdType::class,
+            ],
         ]
     ],
     EntityManagerProvider::class => function (ContainerInterface $container): SingleManagerProvider {
