@@ -23,6 +23,9 @@ composer-install:
 app-migrations:
 	docker-compose run --rm php-cli composer app migrations:migrate --no-iteration
 
+validate-schema:
+	docker-compose run --rm php-cli composer app orm:validate-schema
+
 app-permissions:
 	docker run --rm -v ${PWD}:/app -w /app alpine chmod 777 public -R
 
