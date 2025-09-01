@@ -2,30 +2,23 @@
 
 namespace App\Parser\Entity\Ticket;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
+use ArrayObject;
 
-#[ORM\Entity]
-#[ORM\Table(name: 'questions')]
+
 final class Question
 {
-    #[ORM\Column(type: 'string', unique: true)]
     private string $id;
-    #[ORM\Column(type: 'string', length: 255)]
     private string $number;
-    #[ORM\Column(type: 'string', length: 255)]
     private string $text;
-    #[ORM\Column(type: 'string', length: 255)]
     private string $questionMainImg;
-    private Collection $answers;
+    private array $answers;
     public function __construct(string $id, string $number, string $text, string $questionMainImg, array $answers)
     {
         $this->id = $id;
         $this->number = $number;
         $this->text = $text;
         $this->questionMainImg = $questionMainImg;
-        $this->answers = new ArrayCollection($answers);
+        $this->answers = (new ArrayObject($answers))->getArrayCopy();
     }
     public function getId(): string
     {
@@ -45,6 +38,6 @@ final class Question
     }
     public function getAnswers(): array
     {
-        return $this->answers->toArray();
+        return $this->answers;
     }
 }
