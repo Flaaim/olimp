@@ -12,7 +12,8 @@
         "webmozart/assert": "^1.11",
         "guzzlehttp/guzzle": "^7.0",
         "doctrine/orm": "^3.5",
-        "laminas/laminas-config-aggregator": "^1.18"
+        "laminas/laminas-config-aggregator": "^1.18",
+        "doctrine/migrations": "^3.9"
     },
     "autoload": {
       "psr-4": {
