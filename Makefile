@@ -20,6 +20,9 @@ app-init: app-permissions composer-install
 composer-install:
 	docker-compose run --rm php-cli composer install
 
+app-migrations:
+	docker-compose run --rm php-cli composer app migrations:migrate --no-iteration
+
 app-permissions:
 	docker run --rm -v ${PWD}:/app -w /app alpine chmod 777 public -R
 
