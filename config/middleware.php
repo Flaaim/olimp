@@ -11,4 +11,5 @@ use Slim\Views\TwigMiddleware;
 return static function (App $app, ContainerInterface $container): void {
 
     $app->addErrorMiddleware($container->get('config')['debug'], true, true);
+    $app->addBodyParsingMiddleware();
 };
