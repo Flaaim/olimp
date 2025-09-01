@@ -9,7 +9,6 @@ return [
     'config' => [
         'console' => [
             'commands' => [
-                CreateCommand::class,
                 DropCommand::class,
             ]
         ]
