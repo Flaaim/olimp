@@ -8,7 +8,10 @@ use Doctrine\ORM\EntityRepository;
 
 class TicketRepository
 {
-    public function __construct(private readonly EntityManagerInterface $em, private readonly EntityRepository $repo)
+    public function __construct(
+        private readonly EntityManagerInterface $em,
+        private readonly EntityRepository $repo
+    )
     {}
     public function add(Ticket $ticket): void
     {
