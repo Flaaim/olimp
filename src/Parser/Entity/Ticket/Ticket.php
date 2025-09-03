@@ -3,7 +3,8 @@
 namespace App\Parser\Entity\Ticket;
 
 use App\Parser\Entity\Parser\Id;
-use ArrayObject;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
@@ -13,18 +14,18 @@ final class Ticket
     #[ORM\Id]
     #[ORM\Column(type: 'id', unique: true)]
     private Id $id;
-    #[ORM\Column(type: 'json')]
-    private array $questions;
+    #[ORM\OneToMany(targetEntity: Question::class, mappedBy: 'ticket', cascade: ['persist'], orphanRemoval: true)]
+    private Collection $questions;
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $cipher;
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $name;
-    public function __construct(Id $id, ArrayObject $questions, ?string $cipher = null, ?string $name = null)
+    private function __construct(Id $id, ?string $cipher = null, ?string $name = null)
     {
         $this->id = $id;
-        $this->questions = $questions->getArrayCopy();
         $this->cipher = $cipher;
         $this->name = $name;
+        $this->questions = new ArrayCollection();
     }
     public function getId(): Id
     {
@@ -40,30 +41,29 @@ final class Ticket
     }
     public function getQuestions(): array
     {
-        return $this->questions;
+        return $this->questions->toArray();
     }
-
     public static function fromArray(array $data): self
     {
-        return new self(
+       $ticket = new self(
             new Id($data['id']),
-            new ArrayObject(array_map(
-                fn($questionData): Question => new Question(
-                $questionData['id'],
-                $questionData['number'],
-                $questionData['text'],
-                $questionData['image'],
-                array_map(
-                    fn($answerData): Answer => new Answer(
-                        $answerData['text'],
-                        $answerData['isCorrect'],
-                        $answerData['image']
-                    ),
-                    $questionData['answers']
-                )
-            ), $data['questions'])),
             $data['cipher'] ?? null,
             $data['name'] ?? null
-        );
+       );
+
+        if(!empty($data['questions'])){
+            foreach ($data['questions'] as $questionData){
+                $question = Question::fromArray($questionData);
+                $ticket->addQuestions($question);
+            }
+        }
+
+        return $ticket;
+    }
+    public function addQuestions(Question $question): self
+    {
+        $this->questions->add($question);
+        $question->setTicket($this);
+        return $this;
     }
 }

@@ -2,16 +2,36 @@
 
 namespace App\Parser\Entity\Ticket;
 
+use App\Parser\Entity\Parser\Id;
+use Doctrine\ORM\Mapping as ORM;
+use Webmozart\Assert\Assert;
+
+#[ORM\Entity]
+#[ORM\Table(name: 'answers')]
 final class Answer
 {
+    #[ORM\Id]
+    #[ORM\Column(type: 'id', unique: true)]
+    private Id $id;
+    #[ORM\Column(type: 'string', length: 255)]
     private string $text;
+    #[ORM\Column(type: 'boolean')]
     private bool $isCorrect;
+    #[ORM\Column(type: 'string', length: 255)]
     private string $img;
-    public function __construct(string $text, bool $isCorrect, string $img)
+    #[ORM\ManyToOne(targetEntity: Question::class, inversedBy: 'answers')]
+    #[ORM\JoinColumn(name: 'question_id', referencedColumnName: 'id', nullable: false)]
+    private Question $question;
+    private function __construct(Id $id, string $text, bool $isCorrect, string $img)
     {
+        $this->id = $id;
         $this->text = $text;
         $this->isCorrect = $isCorrect;
         $this->img = $img;
+    }
+    public function getId(): Id
+    {
+        return $this->id;
     }
     public function getText(): string
     {
@@ -24,5 +44,19 @@ final class Answer
     public function getImg(): string
     {
         return $this->img;
+    }
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            new Id($data['id']),
+            $data['text'],
+            $data['isCorrect'],
+            $data['image']
+        );
+    }
+    public function setQuestion(Question $question): self
+    {
+       $this->question = $question;
+       return $this;
     }
 }
