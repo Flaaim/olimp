@@ -2,29 +2,34 @@
 
 namespace App\Parser\Service;
 
-use App\Parser\Entity\Ticket\Answer;
-use App\Parser\Entity\Ticket\Question;
+use App\Parser\Entity\Ticket\Ticket;
+use Ramsey\Uuid\Uuid;
 
 final class TicketBuilder
 {
-    public function build(array $questionData): array
+    public function build(array $questionsData): Ticket
     {
-        return array_map(
-            fn($questionData): Question => new Question(
-                $questionData['Id'],
-                $questionData['Number'],
-                $questionData['Text'],
-                $questionData['QuestionMainImg'],
-                array_map(
-                    fn($answerData): Answer => new Answer(
-                        $answerData['Text'],
-                        $answerData['Correct'],
-                        $answerData['Img']
-                    ),
-                    $questionData['answers']
+        $ticket = [];
+        $ticket['id'] = Uuid::uuid4()->toString();
+        $ticket['cipher'] = $questionsData['cipher'] ?? null;
+        $ticket['name'] = $questionsData['name'] ?? null;
+        $ticket['questions'] = array_map(
+            fn($question) => [
+                'id' => Uuid::uuid4()->toString(),
+                'number' => $question['Number'],
+                'text' => $question['Text'],
+                'image' => $question['QuestionMainImg'],
+                'answers' => array_map(
+                    fn($answer) => [
+                        'id' => UUID::uuid4()->toString(),
+                        'text' => $answer['Text'],
+                        'isCorrect' => $answer['Correct'],
+                        'image' => $answer['Img'],
+                    ], $question['answers']
                 )
-            ),
-            $questionData
+            ], $questionsData
         );
+
+        return Ticket::fromArray($ticket);
     }
 }

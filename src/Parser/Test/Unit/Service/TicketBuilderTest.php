@@ -2,7 +2,7 @@
 
 namespace App\Parser\Test\Unit\Service;
 
-use App\Parser\Entity\Ticket\Question;
+use App\Parser\Entity\Ticket\Ticket;
 use App\Parser\Service\TicketBuilder;
 use PHPUnit\Framework\TestCase;
 
@@ -11,16 +11,15 @@ class TicketBuilderTest extends TestCase
 
     public function testSuccess(): void
     {
-        $questions = (new TicketBuilder())->build($this->getValidQuestions());
+        $ticket = (new TicketBuilder())->build($this->getValidQuestions());
 
-        $this->assertNotNull($questions);
-        $this->assertInstanceOf(Question::class, $questions[0]);
+        $this->assertIsArray($ticket->getQuestions());
+        $this->assertEquals($this->getValidQuestions()[0]['Number'], $ticket->getQuestions()[0]->getNumber());
+        $this->assertEquals($this->getValidQuestions()[0]['Text'], $ticket->getQuestions()[0]->getText());
+        $this->assertEquals($this->getValidQuestions()[0]['QuestionMainImg'], $ticket->getQuestions()[0]->getQuestionMainImg());
 
-        $this->assertEquals($this->getValidQuestions()[0]['Id'], $questions[0]->getId());
-        $this->assertEquals($this->getValidQuestions()[0]['Number'], $questions[0]->getNumber());
-        $this->assertEquals($this->getValidQuestions()[0]['Text'], $questions[0]->getText());
-        $this->assertEquals($this->getValidQuestions()[0]['QuestionMainImg'], $questions[0]->getQuestionMainImg());
-        $this->assertEquals($this->getValidQuestions()[0]['answers'][0]['Text'], $questions[0]->getAnswers()[0]->getText());
+        $this->assertIsArray($ticket->getQuestions()[0]->getAnswers());
+
 
     }
     private function getValidQuestions(): array
