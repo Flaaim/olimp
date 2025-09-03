@@ -10,7 +10,6 @@ class Command
         public readonly array $ticket
     )
     {
-        Assert::isEmpty($this->ticket);
         Assert::isArray($this->ticket);
     }
 }
