@@ -15,13 +15,13 @@ docker-pull:
 docker-build-pull:
 	docker-compose build --pull
 
-app-init: app-permissions composer-install
+app-init: app-permissions composer-install app-migrations
 
 composer-install:
 	docker-compose run --rm php-cli composer install
 
 app-migrations:
-	docker-compose run --rm php-cli composer app migrations:migrate --no-iteration
+	docker-compose run --rm php-cli composer app migrations:migrate -- --no-interaction
 
 validate-schema:
 	docker-compose run --rm php-cli composer app orm:validate-schema
