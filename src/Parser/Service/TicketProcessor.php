@@ -2,10 +2,7 @@
 
 namespace App\Parser\Service;
 
-use App\Parser\Entity\Parser\Id;
 use App\Parser\Entity\Ticket\Ticket;
-use ArrayObject;
-use Ramsey\Uuid\Uuid;
 
 class TicketProcessor
 {
@@ -26,16 +23,13 @@ class TicketProcessor
         $this->validator = $validator;
         $this->imageHandler = $imageHandler;
     }
+
     public function createTicket(array $rawQuestions): Ticket
     {
         $this->validator->validate($rawQuestions);
         $withImages = $this->imageHandler->handle($rawQuestions);
         $sanitized = $this->sanitizer->sanitize($withImages);
-        $questions = $this->builder->build($sanitized);
 
-        return new Ticket(
-            new Id(Uuid::uuid4()->toString()),
-            new ArrayObject($questions)
-        );
+        return $this->builder->build($sanitized);
     }
 }
