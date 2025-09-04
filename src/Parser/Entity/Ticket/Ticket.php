@@ -39,9 +39,9 @@ final class Ticket
     {
         return $this->cipher;
     }
-    public function getQuestions(): array
+    public function getQuestions(): Collection
     {
-        return $this->questions->toArray();
+        return $this->questions;
     }
     public static function fromArray(array $data): self
     {

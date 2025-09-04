@@ -49,9 +49,9 @@ final class Question
     {
         return $this->questionMainImg;
     }
-    public function getAnswers(): array
+    public function getAnswers(): Collection
     {
-        return $this->answers->toArray();
+        return $this->answers;
     }
     public static function fromArray(array $data): self
     {
