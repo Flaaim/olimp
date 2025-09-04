@@ -20,7 +20,7 @@ class ResponseParse implements \JsonSerializable
             $ticket->getId()->getValue(),
             $ticket->getName(),
             $ticket->getCipher(),
-            $ticket->getQuestions(),
+            $ticket->getQuestions()->toArray(),
         );
     }
 
@@ -42,7 +42,7 @@ class ResponseParse implements \JsonSerializable
                             'text' => $answer->getText(),
                             'isCorrect' => $answer->isCorrect(),
                             'image' => $answer->getImg(),
-                        ], $question->getAnswers()
+                        ], $question->getAnswers()->toArray()
                     )
                 ], $this->questions
             )

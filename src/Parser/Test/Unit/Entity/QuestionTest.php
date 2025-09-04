@@ -16,7 +16,7 @@ class QuestionTest extends TestCase
         $this->assertEquals($this->getArrayData()['text'], $question->getText());
         $this->assertEquals($this->getArrayData()['image'], $question->getQuestionMainImg());
 
-        $this->assertIsArray($question->getAnswers());
+        $this->assertIsArray($question->getAnswers()->toArray());
 
     }
 

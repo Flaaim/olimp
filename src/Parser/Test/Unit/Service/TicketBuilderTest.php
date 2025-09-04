@@ -13,12 +13,14 @@ class TicketBuilderTest extends TestCase
     {
         $ticket = (new TicketBuilder())->build($this->getValidQuestions());
 
-        $this->assertIsArray($ticket->getQuestions());
-        $this->assertEquals($this->getValidQuestions()[0]['Number'], $ticket->getQuestions()[0]->getNumber());
-        $this->assertEquals($this->getValidQuestions()[0]['Text'], $ticket->getQuestions()[0]->getText());
-        $this->assertEquals($this->getValidQuestions()[0]['QuestionMainImg'], $ticket->getQuestions()[0]->getQuestionMainImg());
+        $this->assertIsArray($ticket->getQuestions()->toArray());
+        $this->assertEquals($this->getValidQuestions()[0]['Number'], $ticket->getQuestions()->get(0)->getNumber());
+        $this->assertEquals($this->getValidQuestions()[0]['Text'], $ticket->getQuestions()->get(0)->getText());
+        $this->assertEquals($this->getValidQuestions()[0]['QuestionMainImg'], $ticket->getQuestions()->get(0)->getQuestionMainImg());
 
-        $this->assertIsArray($ticket->getQuestions()[0]->getAnswers());
+        $this->assertIsArray(
+            $ticket->getQuestions()->get(0)
+                ->getAnswers()->toArray());
 
 
     }
