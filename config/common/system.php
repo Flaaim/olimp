@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Parser\Entity\Parser\HostMapper;
+use App\Ticket\Service\ImageDownloader\DownloadPath;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Slim\Psr7\Factory\ResponseFactory;
@@ -15,11 +16,15 @@ return [
             'http://olimpoks.chukk.ru:82/',
             'http://olimpoks5.krsk.irgups.ru/',
             'http://cpkchita.ru:9001/'
-        ]
+        ],
+        'downloadPath' => __DIR__ . '/../../public/tickets/',
     ],
     ResponseFactoryInterface::class => Di\get(ResponseFactory::class),
 
     HostMapper::class => function (ContainerInterface $container) {
         return new HostMapper($container->get('config')['hosts']);
+    },
+    DownloadPath::class => function (ContainerInterface $container) {
+       return new DownloadPath($container->get('config')['downloadPath']);
     }
 ];
