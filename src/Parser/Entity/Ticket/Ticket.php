@@ -47,8 +47,8 @@ final class Ticket
     {
        $ticket = new self(
             new Id($data['id']),
-            $data['cipher'] ?? null,
-            $data['name'] ?? null
+            $data['cipher'],
+            $data['name']
        );
 
         if(!empty($data['questions'])){
