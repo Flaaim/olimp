@@ -80,4 +80,8 @@ final class Question
         $answer->setQuestion($this);
         return $this;
     }
+    public function setQuestionMainImg(string $questionMainImg): void
+    {
+        $this->questionMainImg = $questionMainImg;
+    }
 }

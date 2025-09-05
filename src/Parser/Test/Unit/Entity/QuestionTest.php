@@ -19,7 +19,13 @@ class QuestionTest extends TestCase
         $this->assertIsArray($question->getAnswers()->toArray());
 
     }
+    public function testSetNewQuestionImage(): void
+    {
+        $question = Question::fromArray($this->getArrayData());
+        $question->setQuestionMainImg($value ='/tmp/e587aa55-e210-40cf-80c1-4fab48209192/1.jpg');
 
+        $this->assertEquals($value, $question->getQuestionMainImg());
+    }
     private function getArrayData(): array
     {
         return [
