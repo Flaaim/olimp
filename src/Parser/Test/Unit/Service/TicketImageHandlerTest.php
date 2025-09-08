@@ -75,12 +75,12 @@ class TicketImageHandlerTest extends TestCase
                     [
                         "Text" => "<div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><img src=\"/QuestionImages/81703c22-7f8e-4a37-9591-e0d59f4fc093/8/1.jpg\" width=\"350\" height=\"191\" xmlns:xd=\"http://schemas.microsoft.com/office/infopath/2003\" xd:content-type=\"png\" /></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div>-<div><div>\"Запрещается прикасаться. Опасно\"</div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div>",
                         "Correct" => false,
-                        "Img" => "<img src=\"{$this->getHost()->getValue()}QuestionImages/81703c22-7f8e-4a37-9591-e0d59f4fc093/8/1.jpg\">"
+                        "Img" => $this->getHost()->getValue()."QuestionImages/81703c22-7f8e-4a37-9591-e0d59f4fc093/8/1.jpg"
                     ],
                     [
                         "Text" => "<div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><img src=\"/QuestionImages/81703c22-7f8e-4a37-9591-e0d59f4fc093/8/2.jpg\" width=\"350\" height=\"191\" data-mce-selected=\"1\" xmlns:xd=\"http://schemas.microsoft.com/office/infopath/2003\" xd:content-type=\"png\" /></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div>-<div>\"Осторожно. Возможно травмирование рук\"</div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div>",
                         "Correct" => false,
-                        "Img" => "<img src=\"{$this->getHost()->getValue()}QuestionImages/81703c22-7f8e-4a37-9591-e0d59f4fc093/8/2.jpg\">"
+                        "Img" => $this->getHost()->getValue()."QuestionImages/81703c22-7f8e-4a37-9591-e0d59f4fc093/8/2.jpg"
                     ]
                 ]
             ]
