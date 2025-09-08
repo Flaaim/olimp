@@ -3,7 +3,8 @@
 declare(strict_types=1);
 
 use App\Parser\Entity\Parser\HostMapper;
-use App\Ticket\Service\ImageDownloader\DownloadPath;
+use App\Ticket\Service\ImageDownloader\PathBuilder;
+use App\Ticket\Service\ImageDownloader\UrlBuilder;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Slim\Psr7\Factory\ResponseFactory;
@@ -17,14 +18,18 @@ return [
             'http://olimpoks5.krsk.irgups.ru/',
             'http://cpkchita.ru:9001/'
         ],
-        'downloadPath' => __DIR__ . '/../../public/tickets/',
+        'basePath' => __DIR__ . '/../../public/QuestionImages',
+        'urlPath' => 'http://localhost/QuestionImages',
     ],
     ResponseFactoryInterface::class => Di\get(ResponseFactory::class),
 
     HostMapper::class => function (ContainerInterface $container) {
         return new HostMapper($container->get('config')['hosts']);
     },
-    DownloadPath::class => function (ContainerInterface $container) {
-       return new DownloadPath($container->get('config')['downloadPath']);
+    PathBuilder::class => function (ContainerInterface $container) {
+        return new PathBuilder($container->get('config')['basePath']);
+    },
+    UrlBuilder::class => function (ContainerInterface $container) {
+        return new UrlBuilder($container->get('config')['basePath']);
     }
 ];
