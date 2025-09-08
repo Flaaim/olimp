@@ -9,16 +9,16 @@ class PathBuilder
     public function __construct(string $basePath)
     {
         $this->basePath = rtrim($basePath, DIRECTORY_SEPARATOR);
-        $this->currentPath = $this->basePath;
     }
     public function forTicket(string $ticketId): self
     {
         $this->currentPath = $this->basePath . DIRECTORY_SEPARATOR . $ticketId;
+        $this->basePath = $this->currentPath;
         return $this;
     }
     public function forQuestion(string $questionId): self
     {
-        $this->currentPath = $this->currentPath . DIRECTORY_SEPARATOR . $questionId;
+        $this->currentPath = $this->basePath . DIRECTORY_SEPARATOR . $questionId;
         return $this;
     }
     public function create(): void
@@ -27,11 +27,6 @@ class PathBuilder
             mkdir($this->currentPath, 0777, true);
         }
     }
-    public function getPath(): string
-    {
-        return $this->currentPath;
-    }
-
     public function getImagePath(string $filename): string
     {
         if(empty($filename)) {
