@@ -30,6 +30,6 @@ return [
         return new PathBuilder($container->get('config')['basePath']);
     },
     UrlBuilder::class => function (ContainerInterface $container) {
-        return new UrlBuilder($container->get('config')['basePath']);
+        return new UrlBuilder($container->get('config')['urlPath']);
     }
 ];
