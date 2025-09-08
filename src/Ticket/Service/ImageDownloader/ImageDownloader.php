@@ -15,7 +15,8 @@ class ImageDownloader
     )
     {
         $this->builder
-            ->forTicket($ticket->getId()->getValue());
+            ->forTicket($ticket->getId()->getValue())
+                ->create();
     }
     public function download(): array
     {
