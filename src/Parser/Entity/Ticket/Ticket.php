@@ -66,4 +66,15 @@ final class Ticket
         $question->setTicket($this);
         return $this;
     }
+    public function updateQuestionImagesUrl(string $questionId, string $newUrl): void
+    {
+        foreach ($this->questions->toArray() as $question){
+            if($question->getId() === $questionId){
+                $question->setQuestionMainImg($newUrl);
+                return;
+            }
+        }
+        throw new \RuntimeException("Question with ID $questionId not found");
+
+    }
 }
