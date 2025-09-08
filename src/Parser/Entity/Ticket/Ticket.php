@@ -70,11 +70,11 @@ final class Ticket
     {
         foreach ($this->questions->toArray() as $question){
             if($question->getId() === $questionId){
+                /** @var Question $question */
                 $question->setQuestionMainImg($newUrl);
                 return;
             }
         }
         throw new \RuntimeException("Question with ID $questionId not found");
-
     }
 }
