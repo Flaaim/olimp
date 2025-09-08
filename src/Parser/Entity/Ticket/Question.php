@@ -82,6 +82,8 @@ final class Question
     }
     public function setQuestionMainImg(string $questionMainImg): void
     {
-        $this->questionMainImg = $questionMainImg;
+        if($this->getQuestionMainImg() !== $questionMainImg){
+            $this->questionMainImg = $questionMainImg;
+        }
     }
 }
