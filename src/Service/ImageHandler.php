@@ -32,10 +32,10 @@ class ImageHandler
             foreach ($matches[0] as $index => $imgTag) {
                 $imagePath = $matches[1][$index];
                 $absoluteUrl = $this->host->getValue() . $imagePath;
-                $images[] = '<img src="' . $absoluteUrl . '">';
+                $images[] = $absoluteUrl;
             }
         }
 
-        return implode('', $images);
+        return implode(' ', $images);
     }
 }

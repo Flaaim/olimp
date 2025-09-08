@@ -6,13 +6,21 @@ use App\Flusher;
 use App\Parser\Entity\Ticket\Ticket;
 use App\Ticket\Command\Save\Response\Response;
 use App\Ticket\Entity\TicketRepository;
+use App\Ticket\Service\ImageDownloader\ImageDownloader;
+use App\Ticket\Service\ImageDownloader\PathBuilder;
+use App\Ticket\Service\ImageDownloader\PathConverter;
+use App\Ticket\Service\ImageDownloader\UrlBuilder;
+use GuzzleHttp\ClientInterface;
 
 
 class Handler
 {
     public function __construct(
-        private readonly TicketRepository $tickets,
-        private readonly Flusher $flusher
+        private readonly TicketRepository   $tickets,
+        private readonly Flusher            $flusher,
+        private readonly PathBuilder        $path,
+        private readonly UrlBuilder         $urlBuilder,
+        private readonly ClientInterface    $client,
     )
     {}
 
@@ -20,14 +28,19 @@ class Handler
     {
         $ticket = Ticket::fromArray($command->ticket);
 
-        $this->tickets->add($ticket);
+        $result = (new ImageDownloader(
+            $this->path,
+            $this->client,
+            $ticket,
+        ))->download();
 
-        $this->flusher->flush();
+        $converter = new PathConverter($this->urlBuilder);
+        $converter->convert($ticket, $result);
 
-        return new Response(
-            $ticket->getId()->getValue(),
-            $ticket->getName(),
-            $ticket->getCipher()
-        );
+        //$this->tickets->add($ticket);
+
+        //$this->flusher->flush();
+
+        return Response::fromResult($ticket);
     }
 }

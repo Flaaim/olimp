@@ -51,7 +51,7 @@ class ImageHandlerTest extends TestCase
         $extracted = $imageHandler->extractImagesFromContent(
             "<div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><img src=\"/QuestionImages/81703c22-7f8e-4a37-9591-e0d59f4fc093/8/3.jpg\" width=\"350\" height=\"191\" data-mce-selected=\"1\" xmlns:xd=\"http://schemas.microsoft.com/office/infopath/2003\" xd:content-type=\"png\" /></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div>-<div>\"Работать в защитных перчатках\"</div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div>",
         );
-        $expected = '<img src="' . $this->getHost()->getValue() . 'QuestionImages/81703c22-7f8e-4a37-9591-e0d59f4fc093/8/3.jpg">';
+        $expected = $this->getHost()->getValue() . 'QuestionImages/81703c22-7f8e-4a37-9591-e0d59f4fc093/8/3.jpg';
 
         $this->assertSame($expected, $extracted);
     }
@@ -62,7 +62,7 @@ class ImageHandlerTest extends TestCase
             "<div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><img src=\"/QuestionImages/81703c22-7f8e-4a37-9591-e0d59f4fc093/8/3.jpg\" width=\"350\" height=\"191\" data-mce-selected=\"1\" xmlns:xd=\"http://schemas.microsoft.com/office/infopath/2003\" xd:content-type=\"png\" /><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><img src=\"/QuestionImages/81703c22-7f8e-4a37-9591-e0d59f4fc093/8/3.jpg\" width=\"350\" height=\"191\" data-mce-selected=\"1\" xmlns:xd=\"http://schemas.microsoft.com/office/infopath/2003\" xd:content-type=\"png\" /></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div>-<div>\"Работать в защитных перчатках\"</div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div>"
         );
 
-        $expected = '<img src="' . $this->getHost()->getValue() . 'QuestionImages/81703c22-7f8e-4a37-9591-e0d59f4fc093/8/3.jpg">'.'<img src="' . $this->getHost()->getValue() . 'QuestionImages/81703c22-7f8e-4a37-9591-e0d59f4fc093/8/3.jpg">';
+        $expected = $this->getHost()->getValue() . 'QuestionImages/81703c22-7f8e-4a37-9591-e0d59f4fc093/8/3.jpg' .' '. $this->getHost()->getValue() . 'QuestionImages/81703c22-7f8e-4a37-9591-e0d59f4fc093/8/3.jpg';
 
         $this->assertSame($expected, $extracted);
     }
