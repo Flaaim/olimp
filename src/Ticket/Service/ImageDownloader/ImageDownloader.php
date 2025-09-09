@@ -2,6 +2,7 @@
 
 namespace App\Ticket\Service\ImageDownloader;
 
+use App\Parser\Entity\Ticket\Answer;
 use App\Parser\Entity\Ticket\Question;
 use App\Parser\Entity\Ticket\Ticket;
 use GuzzleHttp\Client;
@@ -12,6 +13,7 @@ class ImageDownloader
         private readonly PathBuilder    $builder,
         private readonly Client         $client,
         private readonly Ticket         $ticket,
+        private readonly DownloadChecker $checker
     )
     {
         $this->builder
@@ -33,6 +35,9 @@ class ImageDownloader
 
                 $imagePath = $this->builder->getImagePath(basename($question->getQuestionMainImg()));
                 $results[] = $this->downloadQuestionImage($question, $imagePath);
+                    $this->builder->forAnswer($answer->getId()->getValue())
+                        ->create();
+                }
                 sleep(1);
         }
         return $results;
