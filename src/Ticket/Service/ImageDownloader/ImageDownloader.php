@@ -23,9 +23,9 @@ class ImageDownloader
     public function download(): array
     {
         $results = [];
-        /** @var Question $question */
         foreach ($this->ticket->getQuestions() as $question) {
-                if (!$this->shouldDownloadImage($question)) {
+                /** @var Question $question */
+                if (!$this->shouldDownloadQuestionImage($question)) {
                     continue;
                 }
 
@@ -35,6 +35,11 @@ class ImageDownloader
 
                 $imagePath = $this->builder->getImagePath(basename($question->getQuestionMainImg()));
                 $results[] = $this->downloadQuestionImage($question, $imagePath);
+                foreach ($question->getAnswers() as $answer) {
+                    /** @var Answer $answer */
+                    if(!$this->shouldDownloadAnswerImage($answer)) {
+                        continue;
+                    }
                     $this->builder->forAnswer($answer->getId()->getValue())
                         ->create();
                 }
@@ -43,12 +48,14 @@ class ImageDownloader
         return $results;
     }
 
-    private function shouldDownloadImage(Question $question): bool
+    private function shouldDownloadQuestionImage(Question $question): bool
     {
-        return !empty($question->getQuestionMainImg()) &&
-            filter_var($question->getQuestionMainImg(), FILTER_VALIDATE_URL);
+        return $this->checker->shouldDownloadQuestionImage($question);
     }
-
+    private function shouldDownloadAnswerImage(Answer $answer): bool
+    {
+        return $this->checker->shouldDownloadAnswerImage($answer);
+    }
     private function downloadQuestionImage(Question $question, string $imagePath): array
     {
         try {
