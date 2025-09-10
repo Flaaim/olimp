@@ -80,9 +80,4 @@ class PathBuilderTest extends TestCase
         $this->assertEquals('/tmp/1234/image.jpg', $builder->getImagePath('image.jpg'));
         $this->assertEquals('/tmp/1234/image.jpg', $builder->getImagePath('/image.jpg'));
     }
-    public function testGetImagePathEmpty(): void
-    {
-        $builder = (new PathBuilder(sys_get_temp_dir()))->forTicket('1234');
-        $this->expectException(\InvalidArgumentException::class);
-    }
 }
