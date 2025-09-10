@@ -33,15 +33,20 @@ class ImageDownloader
                     ->forQuestion($question->getId())
                         ->create();
 
-                $imagePath = $this->builder->getImagePath(basename($question->getQuestionMainImg()));
-                $results[] = $this->downloadQuestionImage($question, $imagePath);
+                $questionImagePath = $this->builder->getImagePath($question->getQuestionMainImg());
+                $results['questions'][] = $this->downloadQuestionImage($question, $questionImagePath);
                 foreach ($question->getAnswers() as $answer) {
                     /** @var Answer $answer */
                     if(!$this->shouldDownloadAnswerImage($answer)) {
                         continue;
                     }
+
                     $this->builder->forAnswer($answer->getId()->getValue())
                         ->create();
+
+                    $answerImagePath = $this->builder->getImagePath($answer->getImg());
+
+                    $results['answers'][] = $this->downloadAnswerImage($answer, $answerImagePath);
                 }
                 sleep(1);
         }
@@ -56,7 +61,7 @@ class ImageDownloader
     {
         return $this->checker->shouldDownloadAnswerImage($answer);
     }
-    private function downloadQuestionImage(Question $question, string $imagePath): array
+    private function downloadQuestionImage(Question|Answer $question, string $imagePath): array
     {
         try {
             $this->client->get($question->getQuestionMainImg(), ['sink' => $imagePath,
@@ -84,7 +89,34 @@ class ImageDownloader
                 'attempted_at' => new \DateTimeImmutable()
             ];
         }
+    }
+    private function downloadAnswerImage(Answer $answer, string $imagePath): array
+    {
+        try {
+            $this->client->get($answer->getImg(), ['sink' => $imagePath,
+                'headers' => [
+                    'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+                ],
+                'timeout' => 30,
+                'connect_timeout' => 10
+            ]);
 
+            return [
+                'answer_id' => $answer->getId(),
+                'url' => $answer->getImg(),
+                'status' => 'success',
+                'path' => $imagePath,
+                'downloaded_at' => new \DateTimeImmutable()
+            ];
 
+        } catch (\Exception $e) {
+            return [
+                'answer_id' => $answer->getId(),
+                'url' => $answer->getImg(),
+                'status' => 'error',
+                'error' => $e->getMessage(),
+                'attempted_at' => new \DateTimeImmutable()
+            ];
+        }
     }
 }
