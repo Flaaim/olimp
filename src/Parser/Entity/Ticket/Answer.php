@@ -59,4 +59,11 @@ final class Answer
        $this->question = $question;
        return $this;
     }
+
+    public function setAnswerImg(string $newUrl): void
+    {
+        if($this->getImg() !== $newUrl){
+            $this->img = $newUrl;
+        }
+    }
 }
