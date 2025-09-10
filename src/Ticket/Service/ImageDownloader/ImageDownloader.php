@@ -102,7 +102,7 @@ class ImageDownloader
             ]);
 
             return [
-                'answer_id' => $answer->getId(),
+                'answer_id' => $answer->getId()->getValue(),
                 'url' => $answer->getImg(),
                 'status' => 'success',
                 'path' => $imagePath,

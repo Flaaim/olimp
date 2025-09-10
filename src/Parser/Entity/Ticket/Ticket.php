@@ -69,6 +69,7 @@ final class Ticket
     public function updateQuestionImagesUrl(string $questionId, string $newUrl): void
     {
         foreach ($this->questions->toArray() as $question){
+            /** @var Question $question */
             if($question->getId() === $questionId){
                 /** @var Question $question */
                 $question->setQuestionMainImg($newUrl);
@@ -83,10 +84,12 @@ final class Ticket
         foreach ($this->questions->toArray() as $question){
             /** @var Answer $answer */
             foreach ($question->getAnswers()->toArray() as $answer){
-                if($answer->getId() === $answerId){
+                if($answer->getId()->getValue() === $answerId){
                     $answer->setAnswerImg($newUrl);
+                    return;
                 }
             }
         }
+        throw new \RuntimeException("Answer with ID $answerId not found");
     }
 }
