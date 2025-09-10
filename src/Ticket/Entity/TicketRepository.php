@@ -13,8 +13,18 @@ class TicketRepository
         private readonly EntityRepository $repo
     )
     {}
-    public function add(Ticket $ticket): void
+    public function addOrUpdate(Ticket $ticket): void
     {
-        $this->em->persist($ticket);
+        $existing = $this->findExisting($ticket);
+        if($existing) {
+            $existing->updateFrom($ticket);
+        }else{
+            $this->em->persist($ticket);
+        }
+        $this->em->flush();
+    }
+    private function findExisting(Ticket $ticket): ?Ticket
+    {
+        return $this->repo->find($ticket->getId()->getValue());
     }
 }

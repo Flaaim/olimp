@@ -6,6 +6,7 @@ use App\Flusher;
 use App\Parser\Entity\Ticket\Ticket;
 use App\Ticket\Command\Save\Response\Response;
 use App\Ticket\Entity\TicketRepository;
+use App\Ticket\Service\ImageDownloader\DownloadChecker;
 use App\Ticket\Service\ImageDownloader\ImageDownloader;
 use App\Ticket\Service\ImageDownloader\PathBuilder;
 use App\Ticket\Service\ImageDownloader\PathConverter;
@@ -32,14 +33,16 @@ class Handler
             $this->path,
             $this->client,
             $ticket,
+            new DownloadChecker()
         ))->download();
 
-        $converter = new PathConverter($this->urlBuilder);
-        $converter->convert($ticket, $result);
+        (new PathConverter($this->urlBuilder))
+            ->convertQuestionImages($ticket, $result['questions'])
+            ->convertAnswerImages($ticket, $result['answers']);
 
-        //$this->tickets->add($ticket);
+        $this->tickets->addOrUpdate($ticket);
 
-        //$this->flusher->flush();
+        $this->flusher->flush();
 
         return Response::fromResult($ticket);
     }
