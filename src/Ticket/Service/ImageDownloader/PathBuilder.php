@@ -39,6 +39,6 @@ class PathBuilder
     }
     public function getImagePath(string $filename): string
     {
-        return $this->currentPath . DIRECTORY_SEPARATOR . trim($filename, DIRECTORY_SEPARATOR);
+        return $this->currentPath . DIRECTORY_SEPARATOR . trim(basename($filename), DIRECTORY_SEPARATOR);
     }
 }
