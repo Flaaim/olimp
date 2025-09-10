@@ -6,6 +6,7 @@ use App\Parser\Entity\Parser\Id;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Webmozart\Assert\Assert;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'tickets')]
@@ -91,5 +92,12 @@ final class Ticket
             }
         }
         throw new \RuntimeException("Answer with ID $answerId not found");
+    }
+    public function updateFrom(self $newTicket): self
+    {
+        $this->name = $newTicket->getName();
+        $this->cipher = $newTicket->getCipher();
+
+        return $this;
     }
 }
