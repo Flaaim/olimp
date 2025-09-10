@@ -3,6 +3,7 @@
 namespace App\Ticket\Command\Save\Response;
 
 use App\Parser\Entity\Ticket\Ticket;
+use Ramsey\Collection\Collection;
 use Webmozart\Assert\Assert;
 
 class Response implements \JsonSerializable
@@ -36,6 +37,14 @@ class Response implements \JsonSerializable
                     'number' => $question->getNumber(),
                     'text' => $question->getText(),
                     'image' => $question->getQuestionMainImg(),
+                    'answers' => array_map(
+                        fn ($answer) => [
+                            'id' => $answer->getId()->getValue(),
+                            'text' => $answer->getText(),
+                            'isCorrect' => $answer->isCorrect(),
+                            'image' => $answer->getImg(),
+                        ], $question->getAnswers()->toArray()
+                    )
                 ], $this->questions
             )
         ];
