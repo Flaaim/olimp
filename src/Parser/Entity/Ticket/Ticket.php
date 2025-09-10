@@ -77,4 +77,16 @@ final class Ticket
         }
         throw new \RuntimeException("Question with ID $questionId not found");
     }
+    public function updateAnswerImagesUrl(string $answerId, string $newUrl): void
+    {
+        /** @var Question $question */
+        foreach ($this->questions->toArray() as $question){
+            /** @var Answer $answer */
+            foreach ($question->getAnswers()->toArray() as $answer){
+                if($answer->getId() === $answerId){
+                    $answer->setAnswerImg($newUrl);
+                }
+            }
+        }
+    }
 }
