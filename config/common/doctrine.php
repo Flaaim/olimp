@@ -57,6 +57,7 @@ return [
             ],
             'types' => [
                 App\Shared\Domain\ValueObject\IdType::NAME => App\Shared\Domain\ValueObject\IdType::class,
+                App\Parser\Entity\Ticket\StatusType::NAME => App\Parser\Entity\Ticket\StatusType::class,
             ],
         ]
     ],

@@ -21,11 +21,14 @@ final class Ticket
     private ?string $cipher;
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $name;
+    #[ORM\Column(type: 'status')]
+    private Status $status;
     private function __construct(Id $id, ?string $cipher = null, ?string $name = null)
     {
         $this->id = $id;
         $this->cipher = $cipher;
         $this->name = $name;
+        $this->status = Status::deactivated();
         $this->questions = new ArrayCollection();
     }
     public function getId(): Id
@@ -44,12 +47,16 @@ final class Ticket
     {
         return $this->questions;
     }
+    public function getStatus(): string
+    {
+        return $this->status->getValue();
+    }
     public static function fromArray(array $data): self
     {
        $ticket = new self(
             new Id($data['id']),
             $data['cipher'],
-            $data['name']
+            $data['name'],
        );
 
         if(!empty($data['questions'])){
