@@ -2,6 +2,7 @@
 
 namespace App\Ticket\Entity;
 
+use App\Parser\Entity\Parser\Id;
 use App\Parser\Entity\Ticket\Ticket;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
@@ -21,7 +22,18 @@ class TicketRepository
         }else{
             $this->em->persist($ticket);
         }
-        $this->em->flush();
+    }
+    public function getById(Id $id): Ticket
+    {
+        $ticket = $this->repo->find($id);
+        if(!$ticket) {
+            throw new \DomainException('Ticket not found.');
+        }
+        return $ticket;
+    }
+    public function remove(Ticket $ticket): void
+    {
+        $this->em->remove($ticket);
     }
     private function findExisting(Ticket $ticket): ?Ticket
     {

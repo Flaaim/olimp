@@ -2,19 +2,16 @@
 
 declare(strict_types=1);
 
-
-use App\Http\Index\IndexController;
 use App\Parser\ParserController;
+use App\Ticket\TicketController;
 use Slim\App;
-use Slim\Routing\RouteCollectorProxy;
 
 return static function (App $app): void {
-    $app->get('/', [IndexController::class, 'index']);
+    $app->get('/', \App\Http\Action\HomeAction::class);
 
+    $app->post('/api/parser/parse', [ParserController::class, 'parse']);
 
-    $app->post('/api/parse', [ParserController::class, 'parse']);
+    $app->post('/api/ticket/add', [TicketController::class, 'add']);
 
-    $app->group('/parser', function (RouteCollectorProxy $group) {
-        $group->get('/results', [ParserController::class, 'showResults']);
-    });
+    $app->post('/api/ticket/remove', [TicketController::class, 'remove']);
 };
