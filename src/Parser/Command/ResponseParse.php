@@ -10,6 +10,7 @@ class ResponseParse implements \JsonSerializable
         private readonly string $id,
         private readonly ?string $name,
         private readonly ?string $cipher,
+        private readonly string $status,
         private readonly array $questions,
     )
     {}
@@ -20,6 +21,7 @@ class ResponseParse implements \JsonSerializable
             $ticket->getId()->getValue(),
             $ticket->getName(),
             $ticket->getCipher(),
+            $ticket->getStatus(),
             $ticket->getQuestions()->toArray(),
         );
     }
@@ -30,6 +32,7 @@ class ResponseParse implements \JsonSerializable
             'id' => $this->id,
             'name' => $this->name,
             'cipher' => $this->cipher,
+            'status' => $this->status,
             'questions' => array_map(
                 fn($question) => [
                     'id' => $question->getId(),
