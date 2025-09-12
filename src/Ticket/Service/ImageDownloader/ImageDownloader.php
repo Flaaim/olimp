@@ -10,13 +10,13 @@ use GuzzleHttp\Client;
 class ImageDownloader
 {
     public function __construct(
-        private readonly PathBuilder    $builder,
+        private readonly PathManager    $manager,
         private readonly Client         $client,
         private readonly Ticket         $ticket,
         private readonly DownloadChecker $checker
     )
     {
-        $this->builder
+        $this->manager
             ->forTicket($ticket->getId()->getValue())
                 ->create();
     }
@@ -29,11 +29,11 @@ class ImageDownloader
                     continue;
                 }
 
-                $this->builder
+                $this->manager
                     ->forQuestion($question->getId())
                         ->create();
 
-                $questionImagePath = $this->builder->getImagePath($question->getQuestionMainImg());
+                $questionImagePath = $this->manager->getImagePath($question->getQuestionMainImg());
                 $results['questions'][] = $this->downloadQuestionImage($question, $questionImagePath);
                 foreach ($question->getAnswers() as $answer) {
                     /** @var Answer $answer */
@@ -41,10 +41,10 @@ class ImageDownloader
                         continue;
                     }
 
-                    $this->builder->forAnswer($answer->getId()->getValue())
+                    $this->manager->forAnswer($answer->getId()->getValue())
                         ->create();
 
-                    $answerImagePath = $this->builder->getImagePath($answer->getImg());
+                    $answerImagePath = $this->manager->getImagePath($answer->getImg());
 
                     $results['answers'][] = $this->downloadAnswerImage($answer, $answerImagePath);
                 }

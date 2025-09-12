@@ -8,8 +8,8 @@ use App\Ticket\Command\Save\Response\Response;
 use App\Ticket\Entity\TicketRepository;
 use App\Ticket\Service\ImageDownloader\DownloadChecker;
 use App\Ticket\Service\ImageDownloader\ImageDownloader;
-use App\Ticket\Service\ImageDownloader\PathBuilder;
 use App\Ticket\Service\ImageDownloader\PathConverter;
+use App\Ticket\Service\ImageDownloader\PathManager;
 use App\Ticket\Service\ImageDownloader\UrlBuilder;
 use GuzzleHttp\ClientInterface;
 
@@ -19,7 +19,7 @@ class Handler
     public function __construct(
         private readonly TicketRepository   $tickets,
         private readonly Flusher            $flusher,
-        private readonly PathBuilder        $path,
+        private readonly PathManager        $path,
         private readonly UrlBuilder         $urlBuilder,
         private readonly ClientInterface    $client,
     )

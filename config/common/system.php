@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use App\Parser\Entity\Parser\HostMapper;
-use App\Ticket\Service\ImageDownloader\PathBuilder;
+use App\Ticket\Service\ImageDownloader\PathManager;
 use App\Ticket\Service\ImageDownloader\UrlBuilder;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
@@ -26,8 +26,8 @@ return [
     HostMapper::class => function (ContainerInterface $container) {
         return new HostMapper($container->get('config')['hosts']);
     },
-    PathBuilder::class => function (ContainerInterface $container) {
-        return new PathBuilder($container->get('config')['basePath']);
+    PathManager::class => function (ContainerInterface $container) {
+        return new PathManager($container->get('config')['basePath']);
     },
     UrlBuilder::class => function (ContainerInterface $container) {
         return new UrlBuilder($container->get('config')['urlPath']);
