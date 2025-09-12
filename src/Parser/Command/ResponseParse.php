@@ -21,7 +21,7 @@ class ResponseParse implements \JsonSerializable
             $ticket->getId()->getValue(),
             $ticket->getName(),
             $ticket->getCipher(),
-            $ticket->getStatus(),
+            $ticket->getStatus()->getValue(),
             $ticket->getQuestions()->toArray(),
         );
     }

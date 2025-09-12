@@ -47,9 +47,9 @@ final class Ticket
     {
         return $this->questions;
     }
-    public function getStatus(): string
+    public function getStatus(): Status
     {
-        return $this->status->getValue();
+        return $this->status;
     }
     public static function fromArray(array $data): self
     {
@@ -59,6 +59,10 @@ final class Ticket
             $data['name'],
        );
 
+        if(!empty($data['status'])){
+            $ticket->setStatus(new Status($data['status']));
+        }
+
         if(!empty($data['questions'])){
             foreach ($data['questions'] as $questionData){
                 $question = Question::fromArray($questionData);
@@ -67,6 +71,10 @@ final class Ticket
         }
 
         return $ticket;
+    }
+    public function setStatus(Status $status): void
+    {
+        $this->status = $status;
     }
     public function addQuestions(Question $question): self
     {
@@ -104,6 +112,7 @@ final class Ticket
     {
         $this->name = $newTicket->getName();
         $this->cipher = $newTicket->getCipher();
+        $this->status = $newTicket->getStatus();
 
         return $this;
     }
