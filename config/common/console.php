@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Console;
+use App\Console\MailerCheckCommand;
 use Doctrine\Migrations\Tools\Console\Command\ExecuteCommand;
 use Doctrine\Migrations\Tools\Console\Command\LatestCommand;
 use Doctrine\Migrations\Tools\Console\Command\MigrateCommand;
@@ -15,7 +15,7 @@ return [
         'console' => [
             'commands' => [
                 ValidateSchemaCommand::class,
-
+                MailerCheckCommand::class,
 
                 ExecuteCommand::class,
                 MigrateCommand::class,
