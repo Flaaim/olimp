@@ -41,6 +41,7 @@ services:
       MAILER_ENCRYPTION: tcp
       MAILER_FROM: admin@app.test
       MAILER_FROM_NAME: admin
+      FRONTEND_URL: http://localhost
   postgres:
     image: postgres:12.2-alpine
     environment:
