@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Ticket\Command\Save\Response;
+namespace App\Ticket\Command;
 
 use App\Parser\Entity\Ticket\Ticket;
-use Ramsey\Collection\Collection;
-use Webmozart\Assert\Assert;
 
-class Response implements \JsonSerializable
+class TicketResponse
 {
     public function __construct(
         private readonly string  $id,

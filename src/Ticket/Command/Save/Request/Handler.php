@@ -4,7 +4,7 @@ namespace App\Ticket\Command\Save\Request;
 
 use App\Flusher;
 use App\Parser\Entity\Ticket\Ticket;
-use App\Ticket\Command\Save\Response\Response;
+use App\Ticket\Command\TicketResponse;
 use App\Ticket\Entity\TicketRepository;
 use App\Ticket\Service\ImageDownloader\DownloadChecker;
 use App\Ticket\Service\ImageDownloader\ImageDownloader;
@@ -25,7 +25,7 @@ class Handler
     )
     {}
 
-    public function handle(Command $command): Response
+    public function handle(Command $command): TicketResponse
     {
         $ticket = Ticket::fromArray($command->ticket);
 
@@ -44,6 +44,6 @@ class Handler
 
         $this->flusher->flush();
 
-        return Response::fromResult($ticket);
+        return TicketResponse::fromResult($ticket);
     }
 }
