@@ -1,0 +1,29 @@
+<?php
+
+use App\Frontend\FrontendUrlTwigExtension;
+use App\Frontend\FrontendUrlGenerator;
+use PHPUnit\Framework\TestCase;
+use Twig\Environment;
+use Twig\Loader\ArrayLoader;
+
+class FrontendUrlTwigExtensionTest extends TestCase
+{
+    public function testSuccess(): void
+    {
+        $frontend = $this->createMock(FrontendUrlGenerator::class);
+        $frontend->expects($this->once())->method('generate')->with(
+            $this->equalTo('path'),
+            $this->equalTo([
+                'a' => 1, 'b' => 2
+            ]),
+        )->willReturn("http://example.com/path?a=1&b=2");
+
+        $twig = new Environment(
+           new ArrayLoader(['template.html.twig' =>  '<p>{{ frontend_url(\'path\', {\'a\': 1, \'b\': 2}) }}</p>'])
+        );
+
+        $twig->addExtension(new FrontendUrlTwigExtension($frontend));
+
+        $this->assertEquals('<p>http://example.com/path?a=1&amp;b=2</p>', $twig->render('template.html.twig'));
+    }
+}
