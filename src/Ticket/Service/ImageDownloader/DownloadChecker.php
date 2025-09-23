@@ -4,9 +4,21 @@ namespace App\Ticket\Service\ImageDownloader;
 
 use App\Parser\Entity\Ticket\Answer;
 use App\Parser\Entity\Ticket\Question;
+use App\Parser\Entity\Ticket\Ticket;
 
 class DownloadChecker
 {
+    public function shouldDownload(Ticket $ticket): bool
+    {
+        $flag = false;
+        foreach ($ticket->getQuestions() as $question) {
+            /** @var Question $question */
+            if($this->shouldDownloadQuestionImage($question)) {
+                $flag = true;
+            }
+        }
+        return $flag;
+    }
     public function shouldDownloadQuestionImage(Question $question): bool
     {
         if (!empty($question->getQuestionMainImg()) &&

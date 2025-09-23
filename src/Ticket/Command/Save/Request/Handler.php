@@ -29,16 +29,20 @@ class Handler
     {
         $ticket = Ticket::fromArray($command->ticket);
 
-        $result = (new ImageDownloader(
-            $this->path,
-            $this->client,
-            $ticket,
-            new DownloadChecker()
-        ))->download();
+        $downloadChecker = new DownloadChecker();
 
-        (new PathConverter($this->urlBuilder))
-            ->convertQuestionImages($ticket, $result['questions'])
-            ->convertAnswerImages($ticket, $result['answers']);
+        if($downloadChecker->shouldDownload($ticket)) {
+            $result = (new ImageDownloader(
+                $this->path,
+                $this->client,
+                $ticket,
+                $downloadChecker
+            ))->download();
+
+            (new PathConverter($this->urlBuilder))
+                ->convertQuestionImages($ticket, $result['questions'])
+                ->convertAnswerImages($ticket, $result['answers']);
+        }
 
         $this->tickets->addOrUpdate($ticket);
 
