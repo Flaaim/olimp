@@ -14,4 +14,6 @@ return static function (App $app): void {
     $app->post('/api/ticket/add', [TicketController::class, 'add']);
 
     $app->post('/api/ticket/remove', [TicketController::class, 'remove']);
+
+    $app->get('/api/ticket/list', [TicketController::class, 'listTickets']);
 };
