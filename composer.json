@@ -30,7 +30,7 @@
     "scripts" : {
       "app": "php bin/app.php --ansi ",
       "lint": "phplint",
-      "test": "phpunit"
+      "test": "phpunit --display-warnings"
     },
     "require-dev": {
         "overtrue/phplint": "^9.6",

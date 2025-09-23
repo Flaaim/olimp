@@ -4,7 +4,7 @@ namespace App\Ticket\Command\Save\Request;
 
 use App\Flusher;
 use App\Parser\Entity\Ticket\Ticket;
-use App\Ticket\Command\TicketResponse;
+use App\Shared\Domain\Response\TicketResponse;
 use App\Ticket\Entity\TicketRepository;
 use App\Ticket\Service\ImageDownloader\DownloadChecker;
 use App\Ticket\Service\ImageDownloader\ImageDownloader;

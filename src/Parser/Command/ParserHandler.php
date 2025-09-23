@@ -17,6 +17,7 @@ use App\Parser\Service\TicketSanitizer;
 use App\Parser\Service\TicketValidator;
 use App\Service\ImageHandler;
 use App\Service\TextSanitizer;
+use App\Shared\Domain\Response\TicketResponse;
 use GuzzleHttp\Exception\GuzzleException;
 
 
@@ -29,7 +30,7 @@ class ParserHandler
         private readonly AnswerParser        $answerParser,
     )
     {}
-    public function handle(ParserCommand $parserCommand): ResponseParse
+    public function handle(ParserCommand $parserCommand): TicketResponse
     {
         try {
             $parser = $this->inputHandler->handle($parserCommand);
@@ -62,7 +63,7 @@ class ParserHandler
                 ),
             ))->createTicket($questionWithAnswers);
 
-            return ResponseParse::fromTicket($ticket);
+            return TicketResponse::fromResult($ticket);
 
         } catch(GuzzleException $e){
             throw new \RuntimeException(

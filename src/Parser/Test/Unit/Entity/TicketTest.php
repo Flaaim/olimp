@@ -4,6 +4,7 @@ namespace App\Parser\Test\Unit\Entity;
 
 use App\Parser\Command\ResponseParse;
 use App\Parser\Entity\Ticket\Ticket;
+use App\Shared\Domain\Response\TicketResponse;
 use PHPUnit\Framework\TestCase;
 
 class TicketTest extends TestCase
@@ -12,7 +13,7 @@ class TicketTest extends TestCase
     public function testFromArray(): void
     {
         $ticket = Ticket::fromArray($this->getArrayData());
-        $array = ResponseParse::fromTicket($ticket)->jsonSerialize();
+        $array = TicketResponse::fromResult($ticket)->jsonSerialize();
 
         $this->assertEquals($this->getArrayData(), $array);
     }
@@ -23,7 +24,7 @@ class TicketTest extends TestCase
 
         $newTicket = $ticket->updateFrom($changedTicket);
 
-        $array = ResponseParse::fromTicket($newTicket)->jsonSerialize();
+        $array = TicketResponse::fromResult($newTicket)->jsonSerialize();
         $this->assertEquals(
             $this->getChangedArrayData(), $array
         );

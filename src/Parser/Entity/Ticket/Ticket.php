@@ -3,6 +3,7 @@
 namespace App\Parser\Entity\Ticket;
 
 use App\Parser\Entity\Parser\Id;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -23,12 +24,15 @@ final class Ticket
     private ?string $name;
     #[ORM\Column(type: 'status')]
     private Status $status;
-    private function __construct(Id $id, ?string $cipher = null, ?string $name = null)
+    #[ORM\Column(type: 'datetime_immutable')]
+    private ?DateTimeImmutable $updatedAt;
+    private function __construct(Id $id, ?string $cipher = null, ?string $name = null, DateTimeImmutable $updatedAt = null)
     {
         $this->id = $id;
         $this->cipher = $cipher;
         $this->name = $name;
         $this->status = Status::deactivated();
+        $this->updatedAt = $updatedAt;
         $this->questions = new ArrayCollection();
     }
     public function getId(): Id
@@ -57,6 +61,7 @@ final class Ticket
             new Id($data['id']),
             $data['cipher'],
             $data['name'],
+            $data['updatedAt']
        );
 
         if(!empty($data['status'])){

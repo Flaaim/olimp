@@ -3,7 +3,7 @@
 namespace App\Ticket\Command\GetTicketDetails\Request;
 
 use App\Parser\Entity\Parser\Id;
-use App\Ticket\Command\TicketResponse;
+use App\Shared\Domain\Response\TicketResponse;
 use App\Ticket\Entity\TicketRepository;
 
 class Handler
