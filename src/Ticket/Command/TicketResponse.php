@@ -4,7 +4,7 @@ namespace App\Ticket\Command;
 
 use App\Parser\Entity\Ticket\Ticket;
 
-class TicketResponse
+class TicketResponse implements \JsonSerializable
 {
     public function __construct(
         private readonly string  $id,
