@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Ticket\Command\Get\Request;
+namespace App\Ticket\Command\GetTicketDetails\Request;
 
 use App\Parser\Entity\Parser\Id;
 use App\Ticket\Command\TicketResponse;
