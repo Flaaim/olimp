@@ -24,7 +24,7 @@ final class Ticket
     private ?string $name;
     #[ORM\Column(type: 'status')]
     private Status $status;
-    #[ORM\Column(type: 'datetime_immutable')]
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private ?DateTimeImmutable $updatedAt;
     private function __construct(Id $id, ?string $cipher = null, ?string $name = null, DateTimeImmutable $updatedAt = null)
     {
@@ -61,7 +61,7 @@ final class Ticket
             new Id($data['id']),
             $data['cipher'],
             $data['name'],
-            $data['updatedAt']
+            $data['updatedAt'] ?? null
        );
 
         if(!empty($data['status'])){
