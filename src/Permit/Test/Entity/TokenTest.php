@@ -14,11 +14,11 @@ class TokenTest extends TestCase
     {
         $token = new Token(
             $value = Uuid::uuid4()->toString(),
-            $date = new DateTimeImmutable(),
+            $expires = new DateTimeImmutable('+ 1 day')
         );
 
         $this->assertEquals($value, $token->getValue());
-        $this->assertEquals($date, $token->getExpires());
+        $this->assertEquals($expires, $token->getExpires());
         $this->assertFalse($token->isUsed());
     }
     public function testCase(): void
