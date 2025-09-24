@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Permit\Test\Entity;
+namespace App\Permit\Test\Service;
 
 use App\Frontend\FrontendUrlGenerator;
 use App\Permit\Entity\Email;
-use App\Permit\Entity\PermitTokenSender;
+use App\Permit\Service\PermitTokenSender;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Mailer\Exception\TransportException;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
-use \Symfony\Component\Mime\Email as MimeEmail;
+use Symfony\Component\Mime\Email as MimeEmail;
 
 class PermitTokenSenderTest extends TestCase
 {
