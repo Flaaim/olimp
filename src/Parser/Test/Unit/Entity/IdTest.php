@@ -2,7 +2,7 @@
 
 namespace App\Parser\Test\Unit\Entity;
 
-use App\Parser\Entity\Parser\Id;
+use App\Shared\Domain\ValueObject\Id;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 

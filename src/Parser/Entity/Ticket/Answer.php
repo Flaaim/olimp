@@ -2,9 +2,8 @@
 
 namespace App\Parser\Entity\Ticket;
 
-use App\Parser\Entity\Parser\Id;
+use App\Shared\Domain\ValueObject\Id;
 use Doctrine\ORM\Mapping as ORM;
-use Webmozart\Assert\Assert;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'answers')]

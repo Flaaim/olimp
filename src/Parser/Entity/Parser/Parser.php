@@ -2,6 +2,8 @@
 
 namespace App\Parser\Entity\Parser;
 
+use App\Shared\Domain\ValueObject\Id;
+
 class Parser
 {
     private Id $id;

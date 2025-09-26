@@ -2,12 +2,11 @@
 
 namespace App\Parser\Entity\Ticket;
 
-use App\Parser\Entity\Parser\Id;
+use App\Shared\Domain\ValueObject\Id;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Webmozart\Assert\Assert;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'tickets')]

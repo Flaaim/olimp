@@ -3,8 +3,8 @@
 namespace App\Ticket\Command\Delete\Request;
 
 use App\Flusher;
-use App\Parser\Entity\Parser\Id;
 use App\Service\Common\TransactionManager;
+use App\Shared\Domain\ValueObject\Id;
 use App\Ticket\Command\Delete\Response\Response;
 use App\Ticket\Entity\TicketRepository;
 use App\Ticket\Service\ImageDownloader\PathManager;

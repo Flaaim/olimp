@@ -2,8 +2,8 @@
 
 namespace App\Ticket\Command\GetTicketDetails\Request;
 
-use App\Parser\Entity\Parser\Id;
 use App\Shared\Domain\Response\TicketResponse;
+use App\Shared\Domain\ValueObject\Id;
 use App\Ticket\Entity\TicketRepository;
 
 class Handler

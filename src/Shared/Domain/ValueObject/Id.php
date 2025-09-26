@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Parser\Entity\Parser;
+namespace App\Shared\Domain\ValueObject;
 
 use Ramsey\Uuid\Uuid;
 use Webmozart\Assert\Assert;

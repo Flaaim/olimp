@@ -7,8 +7,8 @@ use App\Parser\Entity\Parser\Cookie;
 use App\Parser\Entity\Parser\Course;
 use App\Parser\Entity\Parser\Host;
 use App\Parser\Entity\Parser\HostMapper;
-use App\Parser\Entity\Parser\Id;
 use App\Parser\Entity\Parser\Parser;
+use App\Shared\Domain\ValueObject\Id;
 use Ramsey\Uuid\Uuid;
 
 class Handler

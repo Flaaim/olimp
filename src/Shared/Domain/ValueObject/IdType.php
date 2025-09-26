@@ -2,7 +2,6 @@
 
 namespace App\Shared\Domain\ValueObject;
 
-use App\Parser\Entity\Parser\Id;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\GuidType;
 

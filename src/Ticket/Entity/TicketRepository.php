@@ -2,8 +2,8 @@
 
 namespace App\Ticket\Entity;
 
-use App\Parser\Entity\Parser\Id;
 use App\Parser\Entity\Ticket\Ticket;
+use App\Shared\Domain\ValueObject\Id;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
