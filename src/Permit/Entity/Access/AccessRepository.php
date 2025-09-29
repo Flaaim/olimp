@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Permit\Entity;
+namespace App\Permit\Entity\Access;
 
 interface AccessRepository
 {

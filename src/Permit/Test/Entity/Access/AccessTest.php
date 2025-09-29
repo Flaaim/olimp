@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Permit\Test\Entity;
+namespace App\Permit\Test\Entity\Access;
 
-use App\Permit\Entity\Access;
+use App\Permit\Entity\Access\Access;
+use App\Permit\Entity\Access\Status;
 use App\Permit\Entity\Email;
-use App\Permit\Entity\Status;
 use App\Permit\Entity\Token;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
@@ -16,10 +16,10 @@ class AccessTest extends TestCase
     {
         $access = new Access(
           $token = new Token(Uuid::uuid4()->toString(), new DateTimeImmutable('+ 1 day')),
-          $email = new Email('some@app.ru'),
+          $email = new Email('user@some.ru'),
           $ticketId = 'ticketId',
           $paymentId = 'paymentId',
-          $status = new Status(),
+          $status = Status::active(),
           $created = new DateTimeImmutable()
         );
 

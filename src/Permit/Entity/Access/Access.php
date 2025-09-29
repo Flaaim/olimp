@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Permit\Entity;
+namespace App\Permit\Entity\Access;
 
+use App\Permit\Entity\Email;
+use App\Permit\Entity\Token;
 use DateTimeImmutable;
 
 class Access
