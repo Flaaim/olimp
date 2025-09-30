@@ -2,6 +2,8 @@
 
 namespace App\Parser\Entity\Ticket;
 
+use App\Permit\Entity\Payment\Currency;
+use App\Permit\Entity\Payment\Price;
 use App\Shared\Domain\ValueObject\Id;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -23,6 +25,8 @@ final class Ticket
     private ?string $name;
     #[ORM\Column(type: 'status')]
     private Status $status;
+    #[ORM\Column(type: 'price')]
+    private Price $price;
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private ?DateTimeImmutable $updatedAt;
     private function __construct(Id $id, ?string $cipher = null, ?string $name = null, DateTimeImmutable $updatedAt = null)
@@ -30,6 +34,7 @@ final class Ticket
         $this->id = $id;
         $this->cipher = $cipher;
         $this->name = $name;
+        $this->price = Price::default();
         $this->status = Status::deactivated();
         $this->updatedAt = $updatedAt;
         $this->questions = new ArrayCollection();
@@ -54,6 +59,10 @@ final class Ticket
     {
         return $this->status;
     }
+    public function getPrice(): Price
+    {
+        return $this->price;
+    }
     public static function fromArray(array $data): self
     {
        $ticket = new self(
@@ -63,6 +72,12 @@ final class Ticket
             $data['updatedAt'] ?? null
        );
 
+       if(!empty($data['price'])){
+           $ticket->setPrice(new Price(
+               $data['price'],
+               new Currency('RUB')
+           ));
+       }
         if(!empty($data['status'])){
             $ticket->setStatus(new Status($data['status']));
         }
@@ -79,6 +94,10 @@ final class Ticket
     public function setStatus(Status $status): void
     {
         $this->status = $status;
+    }
+    public function setPrice(Price $price): void
+    {
+        $this->price = $price;
     }
     public function addQuestions(Question $question): self
     {

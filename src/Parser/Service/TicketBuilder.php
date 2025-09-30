@@ -13,6 +13,7 @@ final class TicketBuilder
         $ticket['id'] = Uuid::uuid4()->toString();
         $ticket['cipher'] = $questionsData['cipher'] ?? null;
         $ticket['name'] = $questionsData['name'] ?? null;
+        $ticket['price'] = $questionsData['price'] ?? null;
         $ticket['questions'] = array_map(
             fn($question) => [
                 'id' => Uuid::uuid4()->toString(),

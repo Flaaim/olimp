@@ -11,6 +11,7 @@ class TicketResponse implements \JsonSerializable
         private readonly ?string $name,
         private readonly ?string $cipher,
         private readonly string  $status,
+        private readonly float $price,
         private readonly array $questions,
     ){}
 
@@ -22,6 +23,7 @@ class TicketResponse implements \JsonSerializable
             $ticket->getName(),
             $ticket->getCipher(),
             $ticket->getStatus()->getValue(),
+            $ticket->getPrice()->getValue(),
             $ticket->getQuestions()->toArray(),
         );
     }
@@ -32,6 +34,7 @@ class TicketResponse implements \JsonSerializable
             'name' => $this->name,
             'cipher' => $this->cipher,
             'status' => $this->status,
+            'price' => $this->price,
             'questions' => array_map(
                 fn ($question) => [
                     'id' => $question->getId(),
