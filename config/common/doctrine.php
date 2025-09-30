@@ -11,7 +11,6 @@ use Doctrine\ORM\ORMSetup;
 use Doctrine\ORM\Tools\Console\EntityManagerProvider;
 use Doctrine\ORM\Tools\Console\EntityManagerProvider\SingleManagerProvider;
 use Psr\Container\ContainerInterface;
-use Symfony\Component\Cache\CacheItem;
 
 return [
     EntityManagerInterface::class => function (ContainerInterface $container) {
@@ -54,11 +53,18 @@ return [
             ],
             'metadata_dirs' => [
                 __DIR__ . '/../../src/Parser/Entity/Ticket',
+                __DIR__ . '/../../src/Permit/Entity/Payment',
+                __DIR__ . '/../../src/Permit/Entity/Access',
             ],
             'types' => [
                 App\Shared\Domain\ValueObject\IdType::NAME => App\Shared\Domain\ValueObject\IdType::class,
-                App\Parser\Entity\Ticket\StatusType::NAME => App\Parser\Entity\Ticket\StatusType::class,
+                App\Parser\Entity\Ticket\TicketStatusType::NAME => App\Parser\Entity\Ticket\TicketStatusType::class,
+
+                App\Permit\Entity\Payment\PaymentStatusType::NAME => App\Permit\Entity\Payment\PaymentStatusType::class,
+                App\Permit\Entity\Access\AccessStatusType::NAME => App\Permit\Entity\Access\AccessStatusType::class,
+
                 App\Permit\Entity\Payment\PriceType::NAME => App\Permit\Entity\Payment\PriceType::class,
+                App\Permit\Entity\EmailType::NAME => App\Permit\Entity\EmailType::class,
             ],
         ]
     ],
