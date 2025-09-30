@@ -15,16 +15,15 @@ class TicketResponse implements \JsonSerializable
         private readonly array $questions,
     ){}
 
-    public static function fromResult(Ticket $ticket): self
+    public static function fromResult(Ticket $ticket, $limit = null): self
     {
-
         return new self(
             $ticket->getId(),
             $ticket->getName(),
             $ticket->getCipher(),
             $ticket->getStatus()->getValue(),
             $ticket->getPrice()->getValue(),
-            $ticket->getQuestions()->toArray(),
+            $ticket->getQuestions()->slice(0, $limit),
         );
     }
     public function jsonSerialize(): array

@@ -23,7 +23,7 @@ final class Ticket
     private ?string $cipher;
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $name;
-    #[ORM\Column(type: 'status')]
+    #[ORM\Column(type: 'ticket_status')]
     private Status $status;
     #[ORM\Column(type: 'price')]
     private Price $price;
