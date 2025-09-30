@@ -2,7 +2,6 @@
 
 namespace App\Parser\Test\Unit\Entity;
 
-use App\Parser\Command\ResponseParse;
 use App\Parser\Entity\Ticket\Ticket;
 use App\Shared\Domain\Response\TicketResponse;
 use PHPUnit\Framework\TestCase;
@@ -28,6 +27,14 @@ class TicketTest extends TestCase
         $this->assertEquals(
             $this->getChangedArrayData(), $array
         );
+    }
+
+    public function testLimitResult(): void
+    {
+        $ticket = Ticket::fromArray($this->getArrayData());
+        $array = TicketResponse::fromResult($ticket, 2)->jsonSerialize();
+
+        $this->assertCount(2, $array['questions']);
     }
     private function getArrayData(): array
     {
