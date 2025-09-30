@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Permit\Test\Entity;
+namespace App\Permit\Test\Entity\Access;
 
 use App\Permit\Entity\Email;
 use PHPUnit\Framework\TestCase;
