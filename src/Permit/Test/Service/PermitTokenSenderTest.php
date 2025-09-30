@@ -3,9 +3,16 @@
 namespace App\Permit\Test\Service;
 
 use App\Frontend\FrontendUrlGenerator;
+use App\Parser\Entity\Ticket\Ticket;
+use App\Parser\Service\TicketBuilder;
 use App\Permit\Entity\Email;
+use App\Permit\Entity\Token;
 use App\Permit\Service\PermitTokenSender;
+use App\Shared\Domain\ValueObject\Id;
+use DateTime;
+use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\Mailer\Exception\TransportException;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
@@ -16,16 +23,18 @@ class PermitTokenSenderTest extends TestCase
     public function testSuccess(): void
     {
         $to = new Email('user@test.ru');
+        $token = $this->getToken();
+        $ticketId = Uuid::uuid4()->toString();
 
         $mailer = $this->createMock(MailerInterface::class);
         $frontendUrl = 'http://localhost';
-        $url = $frontendUrl . '/some-url-frontend?email=' . $to->getValue();
+        $url = $frontendUrl . '/access?ticketId=' . $ticketId . '&token=' . $token->getValue();
 
         $urlGenerator = $this->createMock(FrontendUrlGenerator::class);
         $urlGenerator->expects($this->once())->method('generate')
             ->with(
-                $this->equalTo('some-url-frontend'),
-                $this->equalTo(['email' => $to->getValue()])
+                $this->equalTo('/access'),
+                $this->equalTo(['ticketId' => $ticketId, 'token' => $token->getValue()])
             )->willReturn($url);
 
         $mailer->expects($this->once())->method('send')->willReturnCallback(static function (MimeEmail $email) use ($to, $url) {
@@ -35,12 +44,15 @@ class PermitTokenSenderTest extends TestCase
         });
 
         $sender = new PermitTokenSender($mailer, $urlGenerator);
-        $sender->send($to);
+        $sender->send($to, $token, $ticketId);
     }
 
     public function testFailed(): void
     {
         $to = new Email('user@test.ru');
+        $token = $this->getToken();
+        $ticketId = Uuid::uuid4()->toString();
+
         $mailer = $this->createStub(MailerInterface::class);
         $generator = $this->createMock(FrontendUrlGenerator::class);
         $sender = new PermitTokenSender($mailer, $generator);
@@ -48,11 +60,13 @@ class PermitTokenSenderTest extends TestCase
         $mailer->method('send')->willThrowException(new TransportException());
 
         $this->expectException(TransportException::class);
-        $sender->send($to);
+        $sender->send($to, $token, $ticketId);
     }
-
-    private function getFrontendUrlGenerator(): FrontendUrlGenerator
+    private function getToken(): Token
     {
-        return new FrontendUrlGenerator('http://localhost');
+        return new Token(
+            new Id(Uuid::uuid4()->toString()),
+            new DateTimeImmutable('+ 1 day'),
+        );
     }
 }
