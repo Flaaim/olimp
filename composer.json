@@ -15,7 +15,8 @@
         "laminas/laminas-config-aggregator": "^1.18",
         "doctrine/migrations": "^3.9",
         "symfony/mailer": "^6.4",
-        "twig/twig": "^3.21"
+        "twig/twig": "^3.21",
+        "yoomoney/yookassa-sdk-php": "^3.10"
     },
     "autoload": {
       "psr-4": {
