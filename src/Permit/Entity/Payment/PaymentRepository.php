@@ -4,5 +4,5 @@ namespace App\Permit\Entity\Payment;
 
 interface PaymentRepository
 {
-    public function create(Payment $payment);
+    public function create(Payment $payment): void;
 }

@@ -14,6 +14,7 @@ use App\Shared\Domain\Service\Payment\DTO\MakePaymentDTO;
 use App\Shared\Domain\Service\Payment\PaymentException;
 use App\Shared\Domain\Service\Payment\PaymentProviderInterface;
 use App\Shared\Domain\ValueObject\Id;
+use App\Ticket\Entity\TicketRepository;
 use DateTimeImmutable;
 use Ramsey\Uuid\Uuid;
 
@@ -23,17 +24,20 @@ class Handler
         private readonly PaymentRepository $payments,
         private readonly Flusher $flusher,
         private readonly PaymentProviderInterface $paymentProvider,
+        private readonly TicketRepository $tickets
     )
     {}
 
     public function handle(Command $command): Response
     {
+        $ticket = $this->tickets->getById(new Id($command->ticketId));
+
         $payment = new Payment(
             new Id(Uuid::uuid4()->toString()),
             new Email($command->email),
-            new Price(150.00, new Currency('RUB')),
+            new Price($ticket->getPrice()->getValue(), $ticket->getPrice()->getCurrency()),
             Status::pending(),
-            $command->ticketId,
+            $ticket->getId()->getValue(),
             new DateTimeImmutable()
         );
         try {
@@ -66,6 +70,7 @@ class Handler
         return new Response(
             $payment->getId()->getValue(),
             $payment->getStatus()->getValue(),
+            $payment->getPrice()->getValue(),
             $paymentInfo->redirectUrl,
         );
     }
