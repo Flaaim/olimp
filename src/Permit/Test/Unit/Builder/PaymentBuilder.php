@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Permit\Test\Builder;
+namespace App\Permit\Test\Unit\Builder;
 
 use App\Permit\Entity\Email;
 use App\Permit\Entity\Payment\Currency;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Permit\Test\Entity\Payment;
+namespace App\Permit\Test\Unit\Entity\Payment;
 
 use App\Permit\Entity\Payment\Status;
 use PHPUnit\Framework\TestCase;

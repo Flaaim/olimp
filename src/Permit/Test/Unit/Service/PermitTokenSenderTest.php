@@ -1,15 +1,12 @@
 <?php
 
-namespace App\Permit\Test\Service;
+namespace App\Permit\Test\Unit\Service;
 
 use App\Frontend\FrontendUrlGenerator;
-use App\Parser\Entity\Ticket\Ticket;
-use App\Parser\Service\TicketBuilder;
 use App\Permit\Entity\Email;
 use App\Permit\Entity\Token;
 use App\Permit\Service\PermitTokenSender;
 use App\Shared\Domain\ValueObject\Id;
-use DateTime;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Permit\Test\Entity\Access;
+namespace App\Permit\Test\Unit\Entity\Access;
 
 use App\Permit\Entity\Access\Access;
 use App\Permit\Entity\Access\Status;

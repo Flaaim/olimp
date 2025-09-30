@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Permit\Test\Entity\Payment;
+namespace App\Permit\Test\Unit\Entity\Payment;
 
 use App\Permit\Entity\Email;
 use App\Permit\Entity\Payment\Currency;
 use App\Permit\Entity\Payment\Price;
 use App\Permit\Entity\Payment\Status;
-use App\Permit\Test\Builder\PaymentBuilder;
+use App\Permit\Test\Unit\Builder\PaymentBuilder;
 use App\Shared\Domain\ValueObject\Id;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
