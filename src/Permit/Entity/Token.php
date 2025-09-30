@@ -4,11 +4,17 @@ namespace App\Permit\Entity;
 
 use DateTimeImmutable;
 use Webmozart\Assert\Assert;
+use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\Embeddable]
 class Token
 {
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private string $value;
+
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private DateTimeImmutable $expires;
+    #[ORM\Column(type: 'boolean')]
     private bool $isUsed = false;
     public function __construct(string $value, DateTimeImmutable $expires){
         Assert::uuid($value);

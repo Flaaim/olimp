@@ -5,15 +5,25 @@ namespace App\Permit\Entity\Payment;
 use App\Permit\Entity\Email;
 use App\Shared\Domain\ValueObject\Id;
 use DateTimeImmutable;
-
+use Doctrine\ORM\Mapping as ORM;
+#[ORM\Entity]
+#[ORM\Table(name: 'payments')]
 class Payment
 {
+    #[ORM\Id]
+    #[ORM\Column(type: 'id', unique: true)]
     private Id $id;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $externalId = null;
+    #[ORM\Column(type: 'price')]
     private Price $price;
+    #[ORM\Column(type: 'email')]
     private Email $email;
+    #[ORM\Column(type:'payment_status')]
     private Status $status;
+    #[ORM\Column(type:'string', length: 255)]
     private string $ticketId;
+    #[ORM\Column(type: 'datetime_immutable')]
     private DateTimeImmutable $createdAt;
     public function __construct(Id $id, Email $email, Price $amount, Status $status, string $ticketId, DateTimeImmutable $createdAt)
     {
