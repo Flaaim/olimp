@@ -51,6 +51,7 @@ class Handler
                         'ticketId' => $payment->getTicketId(),
                         'paymentId' => $payment->getId()->getValue(),
                     ],
+                    $payment->getEmail()->getValue(),
                 )
             );
             $payment->setExternalId($paymentInfo->paymentId);
@@ -61,7 +62,7 @@ class Handler
             $this->payments->create($payment);
             $this->flusher->flush();
 
-            throw new PaymentException('Payment initiation failed');
+            throw new PaymentException($e->getMessage());
         }
 
         $this->payments->create($payment);
