@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Parser\Test\Unit\Entity;
+namespace App\Shared\Test\ValueObject;
 
 use App\Shared\Domain\ValueObject\Id;
 use PHPUnit\Framework\TestCase;
