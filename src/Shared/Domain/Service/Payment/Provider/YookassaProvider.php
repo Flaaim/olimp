@@ -7,17 +7,15 @@ use App\Shared\Domain\Service\Payment\DTO\PaymentCallbackDTO;
 use App\Shared\Domain\Service\Payment\DTO\PaymentInfoDTO;
 use App\Shared\Domain\Service\Payment\PaymentException;
 use App\Shared\Domain\Service\Payment\PaymentProviderInterface;
-use Webmozart\Assert\Assert;
 use YooKassa\Client;
 
 class YookassaProvider implements PaymentProviderInterface
 {
     public function __construct(
         private readonly Client $client,
-        private readonly string $returnUrl)
-    {
-        Assert::notEmpty($this->returnUrl);
-    }
+        private readonly YookassaConfig $config
+    )
+    {}
     public function initiatePayment(MakePaymentDTO $paymentData): PaymentInfoDTO
     {
         $idempotenceKey = uniqid('', true);
@@ -30,7 +28,7 @@ class YookassaProvider implements PaymentProviderInterface
                 'confirmation' => [
                     'type' => 'redirect',
                     'locale' => 'ru_RU',
-                    'return_url' => $this->returnUrl,
+                    'return_url' => $this->config->getReturnUrl(),
                 ],
                 'capture' => true,
                 'description' => $paymentData->description,
@@ -40,7 +38,7 @@ class YookassaProvider implements PaymentProviderInterface
                         'email' => $paymentData->customerEmail,
                     ]
                 ]
-            ],  $idempotenceKey);
+            ], $idempotenceKey);
 
             return new PaymentInfoDTO(
                 $response->getId(),
@@ -54,7 +52,7 @@ class YookassaProvider implements PaymentProviderInterface
 
     public function handleCallback(PaymentCallbackDTO $callbackData): bool
     {
-        // TODO: Implement handleCallback() method.
+
     }
 
     public function checkPaymentStatus(string $paymentId): string
@@ -69,6 +67,6 @@ class YookassaProvider implements PaymentProviderInterface
 
     public function getName(): string
     {
-        // TODO: Implement getName() method.
+        return $this->config->getName();
     }
 }
