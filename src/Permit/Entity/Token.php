@@ -14,8 +14,6 @@ class Token
 
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private DateTimeImmutable $expires;
-    #[ORM\Column(type: 'boolean')]
-    private bool $isUsed = false;
     public function __construct(string $value, DateTimeImmutable $expires){
         Assert::uuid($value);
         $this->value = mb_strtolower($value);
@@ -28,10 +26,6 @@ class Token
     public function getExpires(): DateTimeImmutable
     {
         return $this->expires;
-    }
-    public function isUsed(): bool
-    {
-        return $this->isUsed;
     }
     public function validate(string $value, DateTimeImmutable $date): void
     {

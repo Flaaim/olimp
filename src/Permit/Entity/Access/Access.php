@@ -23,19 +23,16 @@ class Access
     private string $ticketId;
     #[ORM\Column(type: 'string', length: 255)]
     private string $paymentId;
-    #[ORM\Column(type: 'access_status')]
-    private Status $status;
     #[ORM\Column(type: 'datetime_immutable')]
     private DateTimeImmutable $created;
 
-    public function __construct(Id $id, Token $token, Email $email, string $ticketId, string $paymentId, Status $status, DateTimeImmutable $created)
+    public function __construct(Id $id, Token $token, Email $email, string $ticketId, string $paymentId, DateTimeImmutable $created)
     {
         $this->id = $id;
         $this->token = $token;
         $this->email = $email;
         $this->ticketId = $ticketId;
         $this->paymentId = $paymentId;
-        $this->status = $status;
         $this->created = $created;
     }
     public function getId(): Id
@@ -53,11 +50,6 @@ class Access
     public function getTicketId(): string
     {
         return $this->ticketId;
-    }
-
-    public function getStatus(): Status
-    {
-        return $this->status;
     }
     public function getCreated(): DateTimeImmutable
     {

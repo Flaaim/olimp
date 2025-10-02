@@ -9,16 +9,14 @@ use App\Shared\Domain\Service\Payment\PaymentProviderInterface;
 use App\Shared\Domain\Service\Payment\PaymentStatus;
 use App\Shared\Domain\Service\Payment\PaymentWebhookData;
 use App\Shared\Domain\Service\Payment\PaymentWebhookParserInterface;
-use App\Shared\Domain\Service\Payment\Provider\YookassaProvider;
 
 
 class Handler
 {
     public function __construct(
         private readonly AccessHandler              $accessHandler,
-        private readonly PaymentProviderInterface   $paymentProvider,
         private readonly PaymentWebhookParserInterface       $webhookParser,
-        private readonly YookassaProvider $provider,
+        private readonly PaymentProviderInterface $provider,
     )
     {}
     public function handle(Command $command): void
@@ -34,7 +32,7 @@ class Handler
             $this->provider->getName()
         );
 
-        $isProcessed = $this->paymentProvider->handleCallback($callbackDTO);
+        $isProcessed = $this->provider->handleCallback($callbackDTO);
 
         if (!$isProcessed) {
             return;

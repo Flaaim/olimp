@@ -19,7 +19,6 @@ class TokenTest extends TestCase
 
         $this->assertEquals($value, $token->getValue());
         $this->assertEquals($expires, $token->getExpires());
-        $this->assertFalse($token->isUsed());
     }
     public function testCase(): void
     {

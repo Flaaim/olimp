@@ -9,6 +9,7 @@ use App\Permit\Entity\Access\Status;
 use App\Permit\Entity\Email;
 use App\Permit\Entity\Token;
 use App\Permit\Service\PermitTokenSender;
+use App\Shared\Domain\ValueObject\Id;
 use DateTimeImmutable;
 use Ramsey\Uuid\Uuid;
 
@@ -28,11 +29,11 @@ class Handler
         );
 
         $access = new Access(
+            new Id(Uuid::uuid4()->toString()),
             $token,
             $email = new Email($command->email),
             $command->ticketId,
             $command->paymentId,
-            Status::active(),
             new DateTimeImmutable()
         );
 
