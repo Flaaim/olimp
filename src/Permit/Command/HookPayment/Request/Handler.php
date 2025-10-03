@@ -7,16 +7,16 @@ use App\Permit\Command\CreateAccess\Request\Handler as AccessHandler;
 use App\Shared\Domain\Service\Payment\DTO\PaymentCallbackDTO;
 use App\Shared\Domain\Service\Payment\PaymentProviderInterface;
 use App\Shared\Domain\Service\Payment\PaymentStatus;
-use App\Shared\Domain\Service\Payment\PaymentWebhookData;
+use App\Shared\Domain\Service\Payment\PaymentWebhookDataInterface;
 use App\Shared\Domain\Service\Payment\PaymentWebhookParserInterface;
 
 
 class Handler
 {
     public function __construct(
-        private readonly AccessHandler              $accessHandler,
-        private readonly PaymentWebhookParserInterface       $webhookParser,
-        private readonly PaymentProviderInterface $provider,
+        private readonly AccessHandler                  $accessHandler,
+        private readonly PaymentWebhookParserInterface  $webhookParser,
+        private readonly PaymentProviderInterface       $provider,
     )
     {}
     public function handle(Command $command): void
@@ -49,12 +49,12 @@ class Handler
         }
     }
 
-    private function shouldCreateAccess(PaymentWebhookData $webhookData): bool
+    private function shouldCreateAccess(PaymentWebhookDataInterface $webhookData): bool
     {
         return $webhookData->isPaid() &&
                 $webhookData->getStatus() === PaymentStatus::SUCCEEDED;
     }
-    private function createAccess(PaymentWebhookData $paymentWebHookData): void
+    private function createAccess(PaymentWebhookDataInterface $paymentWebHookData): void
     {
         $paymentId = $paymentWebHookData->getMetadata('paymentId');
         $ticketId = $paymentWebHookData->getMetadata('ticketId');
