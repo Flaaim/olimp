@@ -23,7 +23,7 @@ class PermitTokenSender
             ->subject('Доступ к билетам с ответами')
             ->to($email->getValue())
             ->text($this->frontendUrl->generate(
-                '/access',
+                'access',
                     ['ticketId' => $ticketId, 'token' => $token->getValue()]
                 )
             );

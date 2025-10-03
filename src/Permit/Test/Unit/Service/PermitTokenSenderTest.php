@@ -30,7 +30,7 @@ class PermitTokenSenderTest extends TestCase
         $urlGenerator = $this->createMock(FrontendUrlGenerator::class);
         $urlGenerator->expects($this->once())->method('generate')
             ->with(
-                $this->equalTo('/access'),
+                $this->equalTo('access'),
                 $this->equalTo(['ticketId' => $ticketId, 'token' => $token->getValue()])
             )->willReturn($url);
 
