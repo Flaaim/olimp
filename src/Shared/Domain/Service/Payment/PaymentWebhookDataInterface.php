@@ -2,7 +2,7 @@
 
 namespace App\Shared\Domain\Service\Payment;
 
-interface PaymentWebhookData
+interface PaymentWebhookDataInterface
 {
     public function getStatus(): string;
     public function isPaid(): bool;
