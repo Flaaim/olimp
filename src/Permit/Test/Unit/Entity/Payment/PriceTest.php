@@ -29,6 +29,19 @@ class PriceTest extends TestCase
         $price = Price::default();
         $this->assertEquals(150.00, $price->getValue());
     }
+    public function testEqualsTrue(): void
+    {
+        $price = new Price(150.00, $this->getCurrency());
+        $this->assertTrue($price->equals($price));
+    }
+
+    public function testEqualsFalse(): void
+    {
+        $price = new Price(150.00, $this->getCurrency());
+        $newPrice = new Price(250.00, new Currency('USD'));
+        $this->assertFalse($price->equals($newPrice));
+    }
+
     private function getCurrency(): Currency
     {
         return new Currency('RUB');

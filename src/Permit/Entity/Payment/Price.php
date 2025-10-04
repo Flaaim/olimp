@@ -30,4 +30,10 @@ class Price
     {
         return number_format($this->value, 2, '.', ' ') . ' ' . $this->currency->getValue();
     }
+
+    public function equals(Price $price): bool
+    {
+        return $this->value === $price->getValue()
+            && $this->currency === $price->getCurrency();
+    }
 }
