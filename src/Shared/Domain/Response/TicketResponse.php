@@ -3,6 +3,7 @@
 namespace App\Shared\Domain\Response;
 
 use App\Parser\Entity\Ticket\Ticket;
+use App\Permit\Entity\Payment\Price;
 
 class TicketResponse implements \JsonSerializable
 {
@@ -11,18 +12,24 @@ class TicketResponse implements \JsonSerializable
         private readonly ?string $name,
         private readonly ?string $cipher,
         private readonly string  $status,
-        private readonly float $price,
+        private readonly ?float $price,
         private readonly array $questions,
     ){}
 
     public static function fromResult(Ticket $ticket, $limit = null): self
     {
+        $price = null;
+
+        if($ticket->hasPrice()) {
+            $price = $ticket->getPrice()->getValue();
+        }
+
         return new self(
             $ticket->getId(),
             $ticket->getName(),
             $ticket->getCipher(),
             $ticket->getStatus()->getValue(),
-            $ticket->getPrice()->getValue(),
+            $price,
             $ticket->getQuestions()->slice(0, $limit),
         );
     }

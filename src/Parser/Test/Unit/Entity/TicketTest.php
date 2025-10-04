@@ -43,7 +43,7 @@ class TicketTest extends TestCase
             'name' => null,
             'cipher' => null,
             'status' => 'nonactive',
-            'price' => 150.00,
+            'price' => null,
             'questions' => [
                 [
                     'id' => '49336cb09422414399ec69aa582f60e4',
@@ -243,7 +243,7 @@ class TicketTest extends TestCase
             'name' => 'Проверка знаний слесаря-сантехника',
             'cipher' => "ОТ 1833.2",
             'status' => 'nonactive',
-            'price' => 150.00,
+            'price' => null,
             'questions' => [
                 [
                     'id' => '49336cb09422414399ec69aa582f60e4',

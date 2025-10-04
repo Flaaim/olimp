@@ -26,8 +26,8 @@ final class Ticket
     private ?string $name;
     #[ORM\Column(type: 'ticket_status')]
     private Status $status;
-    #[ORM\Column(type: 'price')]
-    private Price $price;
+    #[ORM\Column(type: 'price', nullable: true)]
+    private ?Price $price = null;
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private ?DateTimeImmutable $updatedAt;
     private function __construct(Id $id, ?string $cipher = null, ?string $name = null, DateTimeImmutable $updatedAt = null)
@@ -35,7 +35,6 @@ final class Ticket
         $this->id = $id;
         $this->cipher = $cipher;
         $this->name = $name;
-        $this->price = Price::default();
         $this->status = Status::nonactive();
         $this->updatedAt = $updatedAt;
         $this->questions = new ArrayCollection();
@@ -60,7 +59,7 @@ final class Ticket
     {
         return $this->status;
     }
-    public function getPrice(): Price
+    public function getPrice(): ?Price
     {
         return $this->price;
     }
@@ -73,11 +72,8 @@ final class Ticket
             $data['updatedAt'] ?? null
        );
 
-       if(!empty($data['price'])){
-           $ticket->setPrice(new Price(
-               $data['price'],
-               new Currency('RUB')
-           ));
+       if(isset($data['price']) && $data['price'] instanceof Price) {
+           $ticket->setPrice($data['price']);
        }
 
         if(!empty($data['status'])){
@@ -101,15 +97,26 @@ final class Ticket
     }
     public function setActive(): void
     {
-        if($this->price->getValue() !== null){
-            $this->setStatus(Status::active());
+        if(!$this->hasPrice()){
+            throw new DomainException('Cannot activate ticket without price');
         }
+        if ($this->price->getValue() <= 0) {
+            throw new DomainException('Cannot activate ticket with zero or negative price');
+        }
+        if($this->status->getValue() === Status::active()->getValue()){
+            throw new DomainException('Cannot activate ticket with active status');
+        }
+        $this->status = Status::active();
     }
     public function setPrice(Price $newPrice): void
     {
-        if($this->price->getValue() !== $newPrice->getValue()){
+        if($this->price === null || $this->price->equals($newPrice)){
             $this->price = $newPrice;
         }
+    }
+    public function hasPrice(): bool
+    {
+        return $this->price !== null;
     }
     public function addQuestions(Question $question): self
     {
