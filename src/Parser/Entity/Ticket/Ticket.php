@@ -9,6 +9,7 @@ use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use DomainException;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'tickets')]
@@ -35,7 +36,7 @@ final class Ticket
         $this->cipher = $cipher;
         $this->name = $name;
         $this->price = Price::default();
-        $this->status = Status::deactivated();
+        $this->status = Status::nonactive();
         $this->updatedAt = $updatedAt;
         $this->questions = new ArrayCollection();
     }
@@ -78,6 +79,7 @@ final class Ticket
                new Currency('RUB')
            ));
        }
+
         if(!empty($data['status'])){
             $ticket->setStatus(new Status($data['status']));
         }
@@ -91,13 +93,23 @@ final class Ticket
 
         return $ticket;
     }
-    public function setStatus(Status $status): void
+    public function setStatus(Status $newStatus): void
     {
-        $this->status = $status;
+        if($this->status->getValue() !== $newStatus->getValue()){
+            $this->status = $newStatus;
+        }
     }
-    public function setPrice(Price $price): void
+    public function setActive(): void
     {
-        $this->price = $price;
+        if($this->price->getValue() !== null){
+            $this->setStatus(Status::active());
+        }
+    }
+    public function setPrice(Price $newPrice): void
+    {
+        if($this->price->getValue() !== $newPrice->getValue()){
+            $this->price = $newPrice;
+        }
     }
     public function addQuestions(Question $question): self
     {

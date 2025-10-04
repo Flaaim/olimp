@@ -167,7 +167,7 @@ class DownloadCheckerTest extends TestCase
             'id' => '90f3b701-3602-4050-a27f-a246ee980fe7',
             'name' => null,
             'cipher' => null,
-            'status' => 'deactivated',
+            'status' => 'nonactive',
             'questions' => [
                 [
                     'id' => '49336cb09422414399ec69aa582f60e4',
@@ -242,7 +242,7 @@ class DownloadCheckerTest extends TestCase
             'id' => '90f3b701-3602-4050-a27f-a246ee980fe7',
             'name' => null,
             'cipher' => null,
-            'status' => 'deactivated',
+            'status' => 'nonactive',
             'questions' => [
                 [
                     'id' => '49336cb09422414399ec69aa582f60e4',

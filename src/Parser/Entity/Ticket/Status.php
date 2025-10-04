@@ -9,7 +9,7 @@ final class Status
     public const STATUSES = [
         'active',
         'archived',
-        'deactivated',
+        'nonactive',
     ];
     private string $value;
     public function __construct(string $value)
@@ -29,8 +29,8 @@ final class Status
     {
         return new self('archived');
     }
-    public static function deactivated(): self
+    public static function nonactive(): self
     {
-        return new self('deactivated');
+        return new self('nonactive');
     }
 }

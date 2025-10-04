@@ -21,9 +21,9 @@ class StatusTest extends TestCase
     {
         $this->assertSame('archived', Status::archived()->getValue());
     }
-    public function testDeactivated(): void
+    public function testNonactive(): void
     {
-        $this->assertSame('deactivated', Status::deactivated()->getValue());
+        $this->assertSame('nonactive', Status::nonactive()->getValue());
     }
     public function testInvalid(): void
     {

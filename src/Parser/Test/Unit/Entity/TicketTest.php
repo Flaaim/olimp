@@ -42,7 +42,7 @@ class TicketTest extends TestCase
             'id' => '90f3b701-3602-4050-a27f-a246ee980fe7',
             'name' => null,
             'cipher' => null,
-            'status' => 'deactivated',
+            'status' => 'nonactive',
             'price' => 150.00,
             'questions' => [
                 [
@@ -242,8 +242,8 @@ class TicketTest extends TestCase
             'id' => '90f3b701-3602-4050-a27f-a246ee980fe7',
             'name' => 'Проверка знаний слесаря-сантехника',
             'cipher' => "ОТ 1833.2",
-            'status' => 'active',
-            'price' => 150,
+            'status' => 'nonactive',
+            'price' => 150.00,
             'questions' => [
                 [
                     'id' => '49336cb09422414399ec69aa582f60e4',
