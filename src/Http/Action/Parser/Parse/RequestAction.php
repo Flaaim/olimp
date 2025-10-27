@@ -2,6 +2,7 @@
 
 namespace App\Http\Action\Parser\Parse;
 
+use App\Http\HtmlResponse;
 use App\Http\JsonResponse;
 use App\Parser\Command\ParserCommand;
 use App\Parser\Command\ParserHandler;
@@ -33,6 +34,11 @@ class RequestAction implements RequestHandlerInterface
             $handler = $this->container->get(ParserHandler::class);
             /** @var ParserHandler $handler */
             $response = $handler->handle($command);
+
+            if(isset($data['options']['html'])){
+                return new HtmlResponse($response->htmlSerialize());
+            }
+
             return new JsonResponse($response);
         }catch (\Exception $e){
             return new JsonResponse(['message' => $e->getMessage()], 500);
