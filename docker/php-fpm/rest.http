@@ -1,0 +1,16 @@
+
+POST  /localhost/api/parser/parse
+Content-type: application/json
+
+{
+  "host": "https://olimpoks.hydroschool.ru/",
+  "branchId": "17464",
+  "ticketId": "fb456a4b58224f10854e3f8bc1ae36ce",
+  "cookie": ".OLIMPROLES=; .OLIMPAUTH=CCXN+ODV4FHGSxhctfFK24arEhAfRfKT4kR0ZjATPsZpDAtjso9eLG2/xCkwRFagoLB2PDjEkVxWKNHUf9+5g34g4eR3vRWYPdcrB6ZcheXH8JaqtX0CSY3x/JD1/5ZZ; WorkplaceToken=02738e67-68e1-4b2e-bfe4-d94194171314; i18next=ru-RU",
+  "options": {
+    "limit": "79",
+    "html": true
+  }
+}
+
+###
