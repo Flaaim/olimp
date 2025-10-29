@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Action\Parser\Parse;
+namespace App\Http\Action\V1\Parser\Parse;
 
 use App\Http\HtmlResponse;
 use App\Http\JsonResponse;

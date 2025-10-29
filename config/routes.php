@@ -4,23 +4,24 @@ declare(strict_types=1);
 
 
 use App\Http\Action\HomeAction;
+use App\Http\Action\Parser\Parse;
 use App\Ticket\TicketController;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
-use App\Http\Action\Parser\Parse;
 
 return static function (App $app): void {
     $app->get('/', HomeAction::class);
-    $app->group('/api', function (RouteCollectorProxy $group) {
+
+    $app->group('/v1', function (RouteCollectorProxy $group) {
         $group->group('/parser', function (RouteCollectorProxy $group) {
-            $group->post('/parse', Parse\RequestAction::class);
+            $group->post('/parse', \App\Http\Action\V1\Parser\Parse\RequestAction::class);
 
         });
+
+        $group->group('/tickets', function (RouteCollectorProxy $group) {
+            $group->post('/add', [TicketController::class, 'add']);
+            $group->post('/remove', [TicketController::class, 'remove']);
+            $group->post('/list', [TicketController::class, 'listTickets']);
+        });
     });
-
-    $app->post('/api/ticket/add', [TicketController::class, 'add']);
-
-    $app->post('/api/ticket/remove', [TicketController::class, 'remove']);
-
-    $app->get('/api/ticket/list', [TicketController::class, 'listTickets']);
 };
