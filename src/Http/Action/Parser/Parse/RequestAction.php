@@ -6,6 +6,7 @@ use App\Http\HtmlResponse;
 use App\Http\JsonResponse;
 use App\Parser\Command\ParserCommand;
 use App\Parser\Command\ParserHandler;
+use App\Shared\Domain\Response\HtmlTicketSerializer;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -35,8 +36,9 @@ class RequestAction implements RequestHandlerInterface
             /** @var ParserHandler $handler */
             $response = $handler->handle($command);
 
-            if(isset($data['options']['html'])){
-                return new HtmlResponse($response->htmlSerialize());
+            if(isset($data['options']['serialize']) && $data['options']['serialize'] === 'html') {
+                $data = (new HtmlTicketSerializer())->serialize($response);
+                return new HtmlResponse($data);
             }
 
             return new JsonResponse($response);
