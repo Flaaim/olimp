@@ -12,10 +12,13 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use RuntimeException;
+use Twig\Environment;
 
 class RequestAction implements RequestHandlerInterface
 {
-    public function __construct(private readonly ContainerInterface $container)
+    public function __construct(
+        private readonly ContainerInterface $container,
+        private readonly Environment $twig,)
     {}
 
     public function handle(ServerRequestInterface $request): ResponseInterface
@@ -37,8 +40,10 @@ class RequestAction implements RequestHandlerInterface
             $response = $handler->handle($command);
 
             if(isset($data['options']['serialize']) && $data['options']['serialize'] === 'html') {
-                $data = (new HtmlTicketSerializer())->serialize($response);
-                return new HtmlResponse($data);
+
+                return new HtmlResponse(
+                    $this->twig->render('/parser/ticket.html.twig', ['response' => $response])
+                );
             }
 
             return new JsonResponse($response);

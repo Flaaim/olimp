@@ -30,7 +30,7 @@ final class Ticket
     private ?Price $price = null;
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private ?DateTimeImmutable $updatedAt;
-    private function __construct(Id $id, ?string $cipher = null, ?string $name = null, DateTimeImmutable $updatedAt = null)
+    public function __construct(Id $id, ?string $cipher = null, ?string $name = null, DateTimeImmutable $updatedAt = null)
     {
         $this->id = $id;
         $this->cipher = $cipher;

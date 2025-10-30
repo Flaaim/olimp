@@ -21,6 +21,14 @@ services:
       DB_USER: app
       DB_PASSWORD: secret
       DB_NAME: app
+      MAILER_HOST: mailer
+      MAILER_PORT: 1025
+      MAILER_USER: app
+      MAILER_PASSWORD: secret
+      MAILER_ENCRYPTION: tcp
+      MAILER_FROM: admin@app.test
+      MAILER_FROM_NAME: admin
+      FRONTEND_URL: http://localhost
 
   php-cli:
     build:

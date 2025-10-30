@@ -1,0 +1,61 @@
+{# ticket.html.twig #}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Билет {{ response.cipher ?? 'Без номера' }}</title>
+    <style>
+        .answer-correct {
+            color: green;
+        }
+
+    </style>
+</head>
+<body>
+<div class="ticket">
+    <div class="ticket-header">
+        <h2 class="ticket-title">Название: {{ response.name ?? 'Без названия' }}</h2>
+        <div class="ticket-info">
+            <p class="ticket-cipher"><strong>Шифр:</strong> {{ response.cipher ?? 'Не указан' }}</p>
+        </div>
+    </div>
+
+    <div class="questions">
+        <h3 class="questions-title">Вопросы ({{ response.questions|length }})</h3>
+
+        {% for question in response.questions %}
+            <div class="question" id="question-{{ question.getId() }}">
+                <p class="question-text">
+                    <b>{{ loop.index }}. {{ question.getText()|nl2br }}</b>
+                </p>
+
+                {% if question.getQuestionMainImg() is not empty %}
+                    <img src="{{ question.getQuestionMainImg() }}"
+                         class="question-img"
+                         alt="Иллюстрация к вопросу">
+                {% endif %}
+
+                <div class="answers">
+                    {% for answer in question.getAnswers() %}
+                        <ul>
+                            <li class="answer {% if answer.isCorrect() %}answer-correct{% endif %}"
+                                id="answer-{{ answer.getId() }}">
+                                <span class="answer-text">{{ answer.getText()|nl2br }}</span>
+
+                                {% if answer.getImg() is not empty %}
+                                    <img class="answer-img"
+                                         width="100px"
+                                         src="{{ answer.getImg() }}"
+                                         alt="Иллюстрация к ответу">
+                                {% endif %}
+                            </li>
+                        </ul>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+</body>
+</html>

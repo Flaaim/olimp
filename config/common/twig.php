@@ -15,7 +15,7 @@ return [
         $loader = new FilesystemLoader();
 
         foreach($config['template_dirs'] as $alias => $file) {
-            $loader->addPath($alias, $file);
+            $loader->addPath($file, $alias);
         }
 
         $environment = new Environment($loader, [
