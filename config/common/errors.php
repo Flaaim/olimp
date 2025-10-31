@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
+use App\ErrorHandler\LogErrorHandler;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Log\LoggerInterface;
 use Slim\Interfaces\CallableResolverInterface;
 use Slim\Middleware\ErrorMiddleware;
 
@@ -15,14 +17,24 @@ return [
 
     $config = $container->get('config')['errors'];
 
-      return new ErrorMiddleware(
+    $middleware = new ErrorMiddleware(
+      $callableResolver,
+      $responseFactory,
+      $config['displayErrors'],
+      true,
+      true,
+    );
+    $logger = $container->get(LoggerInterface::class);
+
+    $middleware->setDefaultErrorHandler(
+      new LogErrorHandler(
           $callableResolver,
           $responseFactory,
-          $config['displayErrors'],
-          true,
-          true
-      );
+          $logger
+      )
+    );
 
+    return $middleware;
   },
     'config' => [
         'errors' => [
