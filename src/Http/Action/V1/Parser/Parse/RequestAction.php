@@ -2,12 +2,10 @@
 
 namespace App\Http\Action\V1\Parser\Parse;
 
-use App\Http\HtmlResponse;
 use App\Http\JsonResponse;
-use App\Http\YamlResponse;
 use App\Parser\Command\ParserCommand;
 use App\Parser\Command\ParserHandler;
-use App\Shared\Domain\Response\HtmlTicketSerializer;
+use App\Shared\Domain\Response\TicketResponseFactory;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -38,18 +36,14 @@ class RequestAction implements RequestHandlerInterface
             );
             $handler = $this->container->get(ParserHandler::class);
             /** @var ParserHandler $handler */
-            $response = $handler->handle($command);
 
-            if(isset($data['options']['serialize']) && $data['options']['serialize'] === 'html') {
+            $ticket = $handler->handle($command);
 
-                return new HtmlResponse(
-                    $this->twig->render('/parser/ticket.html.twig', ['response' => $response])
-                );
-            }elseif (isset($data['options']['serialize']) && $data['options']['serialize'] === 'yaml') {
-                return new YamlResponse($response->yamlSerialize());
-            }
+            $serializeType = $data['options']['type'] ?? 'json';
 
-            return new JsonResponse($response);
+            $factory = new TicketResponseFactory($serializeType, $this->twig);
+
+            return $factory->createResponse($ticket);
         }catch (\Exception $e){
             return new JsonResponse(['message' => $e->getMessage()], 500);
         }
