@@ -2,7 +2,10 @@
 
 namespace App\Shared\Domain\Response;
 
+use App\Parser\Entity\Ticket\Answer;
+use App\Parser\Entity\Ticket\Question;
 use App\Parser\Entity\Ticket\Ticket;
+use Symfony\Component\Yaml\Yaml;
 
 class TicketResponse implements \JsonSerializable
 {
@@ -57,5 +60,24 @@ class TicketResponse implements \JsonSerializable
                 ], $this->questions
             )
         ];
+    }
+
+    public function yamlSerialize(): string
+    {
+        $yaml = "questions:\n";
+
+        foreach ($this->questions as $question) {
+            $yaml .= "  - name: \"{$question->getNumber()}. {$question->getText()}\"\n";
+            $yaml .= "    answers:\n";
+
+            foreach ($question->getAnswers() as $answer) {
+                $right = $answer->isCorrect() ? 1 : 0;
+                $yaml .= "      - name: \"{$answer->getText()}\"\n";
+                $yaml .= "        right: {$right}\n";
+            }
+
+            $yaml .= "\n";
+        }
+        return $yaml;
     }
 }

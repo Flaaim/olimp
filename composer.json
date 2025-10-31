@@ -16,7 +16,8 @@
         "doctrine/migrations": "^3.9",
         "symfony/mailer": "^6.4",
         "twig/twig": "^3.21",
-        "yoomoney/yookassa-sdk-php": "^3.10"
+        "yoomoney/yookassa-sdk-php": "^3.10",
+        "symfony/yaml": "^6.4"
     },
     "autoload": {
       "psr-4": {

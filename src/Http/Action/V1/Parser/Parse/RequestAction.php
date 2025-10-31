@@ -4,6 +4,7 @@ namespace App\Http\Action\V1\Parser\Parse;
 
 use App\Http\HtmlResponse;
 use App\Http\JsonResponse;
+use App\Http\YamlResponse;
 use App\Parser\Command\ParserCommand;
 use App\Parser\Command\ParserHandler;
 use App\Shared\Domain\Response\HtmlTicketSerializer;
@@ -44,6 +45,8 @@ class RequestAction implements RequestHandlerInterface
                 return new HtmlResponse(
                     $this->twig->render('/parser/ticket.html.twig', ['response' => $response])
                 );
+            }elseif (isset($data['options']['serialize']) && $data['options']['serialize'] === 'yaml') {
+                return new YamlResponse($response->yamlSerialize());
             }
 
             return new JsonResponse($response);
