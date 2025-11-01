@@ -1,7 +1,7 @@
 init: docker-down-clear docker-pull docker-build-pull docker-up app-init
 down: docker-down-clear
 lint: app-lint
-test: app-test
+test: test-unit test-functional
 
 docker-up:
 	docker-compose up -d
@@ -35,5 +35,8 @@ composer-update:
 app-lint:
 	docker-compose run --rm php-cli composer lint
 
-app-test:
-	docker-compose run --rm php-cli composer test
+test-unit:
+	docker-compose run --rm php-cli composer test -- --testsuite unit
+
+test-functional:
+	docker-compose run --rm php-cli composer test -- --testsuite functional
