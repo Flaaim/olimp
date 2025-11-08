@@ -2,8 +2,10 @@
 
 namespace App\Parser\Test\Unit\Entity\Ticket;
 
+use App\Parser\Entity\Ticket\Course;
 use App\Parser\Entity\Ticket\Ticket;
 use App\Shared\Domain\Response\TicketResponse;
+use App\Shared\Domain\ValueObject\Id;
 use PHPUnit\Framework\TestCase;
 
 class TicketTest extends TestCase
@@ -35,6 +37,15 @@ class TicketTest extends TestCase
         $array = TicketResponse::fromResult($ticket, 2)->jsonSerialize();
 
         $this->assertCount(2, $array['questions']);
+    }
+
+    public function testSetCourse(): void
+    {
+        $ticket = Ticket::fromArray($this->getArrayData());
+        $course = new Course(Id::generate(), 'course', 'course_description');
+
+        $ticket->setCourse($course);
+        self::assertEquals($ticket, $course->getTicket());
     }
     private function getArrayData(): array
     {

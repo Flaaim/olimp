@@ -18,7 +18,8 @@ class Course
     private string $description;
     #[ORM\OneToOne(targetEntity: Ticket::class, mappedBy: 'course')]
     private ?Ticket $ticket = null;
-
+    #[ORM\OneToOne(targetEntity: Part::class, inversedBy: 'course')]
+    #[ORM\JoinColumn(name: 'part_id', referencedColumnName: 'id')]
     private ?Part $part = null;
 
     public function __construct(Id $id, string $name, string $description)
@@ -45,20 +46,18 @@ class Course
     }
     public function setTicket(?Ticket $ticket): self
     {
-        if ($ticket === null && $this->ticket !== null) {
-            $this->ticket->setCourse(null);
-        }
-
-        if ($ticket !== null && $ticket->getCourse() !== $this) {
-            $ticket->setCourse($this);
-        }
-
         $this->ticket = $ticket;
         return $this;
     }
 
     public function setPart(?Part $part): self
     {
+        if($part === null && $this->part !== null){
+            $this->part->setCourse(null);
+        }
+        if($part !== null && $part->getCourse() !== $this){
+            $part->setCourse($this);
+        }
         $this->part = $part;
         return $this;
     }

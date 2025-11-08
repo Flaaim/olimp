@@ -2,7 +2,6 @@
 
 namespace App\Parser\Entity\Ticket;
 
-use App\Permit\Entity\Payment\Currency;
 use App\Permit\Entity\Payment\Price;
 use App\Shared\Domain\ValueObject\Id;
 use DateTimeImmutable;
@@ -30,6 +29,9 @@ final class Ticket
     private ?Price $price = null;
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private ?DateTimeImmutable $updatedAt;
+    #[ORM\OneToOne(targetEntity: Course::class, inversedBy: 'ticket')]
+    #[ORM\JoinColumn(name: 'course_id', referencedColumnName: 'id')]
+    private ?Course $course = null;
     public function __construct(Id $id, ?string $cipher = null, ?string $name = null, DateTimeImmutable $updatedAt = null)
     {
         $this->id = $id;
@@ -156,6 +158,23 @@ final class Ticket
         $this->cipher = $newTicket->getCipher();
         $this->status = $newTicket->getStatus();
 
+        return $this;
+    }
+    public function getCourse(): ?Course
+    {
+        return $this->course;
+    }
+    public function setCourse(?Course $course): self
+    {
+        if($course === null && $this->course !== null){
+            $this->course->setTicket(null);
+        }
+
+        if($course !== null && $course->getTicket() !== $this){
+            $course->setTicket($this);
+        }
+
+        $this->course = $course;
         return $this;
     }
 }
