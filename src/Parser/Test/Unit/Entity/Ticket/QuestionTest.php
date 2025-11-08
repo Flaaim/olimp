@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Parser\Test\Unit\Entity;
+namespace App\Parser\Test\Unit\Entity\Ticket;
 
 use App\Parser\Entity\Ticket\Question;
 use PHPUnit\Framework\TestCase;
