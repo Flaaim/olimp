@@ -18,8 +18,7 @@
         "twig/twig": "^3.21",
         "yoomoney/yookassa-sdk-php": "^3.10",
         "symfony/yaml": "^6.4",
-        "monolog/monolog": "^3.9",
-        "doctrine/data-fixtures": "^2.2"
+        "monolog/monolog": "^3.9"
     },
     "autoload": {
       "psr-4": {
@@ -38,6 +37,7 @@
     },
     "require-dev": {
         "overtrue/phplint": "^9.6",
-        "phpunit/phpunit": "^10.5"
+        "phpunit/phpunit": "^10.5",
+        "doctrine/data-fixtures": "^2.2"
     }
 }
