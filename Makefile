@@ -27,7 +27,7 @@ validate-schema:
 	docker-compose run --rm php-cli composer app orm:validate-schema
 
 app-permissions:
-	docker-compose run --rm -v ${PWD}:/app -w /app alpine chmod 777 public var/log -R
+	docker run --rm -v ${PWD}:/app -w /app alpine chmod 777 public var/log -R
 
 app-fixtures:
 	docker-compose run --rm php-cli composer app fixtures:load
