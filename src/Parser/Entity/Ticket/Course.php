@@ -19,6 +19,8 @@ class Course
     #[ORM\OneToOne(targetEntity: Ticket::class, mappedBy: 'course')]
     private ?Ticket $ticket = null;
 
+    private ?Part $part = null;
+
     public function __construct(Id $id, string $name, string $description)
     {
         $this->id = $id;
@@ -53,5 +55,16 @@ class Course
 
         $this->ticket = $ticket;
         return $this;
+    }
+
+    public function setPart(?Part $part): self
+    {
+        $this->part = $part;
+        return $this;
+    }
+
+    public function getPart(): ?Part
+    {
+        return $this->part;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Parser\Test\Unit\Entity;
+namespace App\Parser\Test\Unit\Entity\Parser;
 
 use App\Parser\Entity\Parser\Cookie;
 use PHPUnit\Framework\TestCase;
