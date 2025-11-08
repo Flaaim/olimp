@@ -15,7 +15,7 @@ docker-pull:
 docker-build-pull:
 	docker-compose build --pull
 
-app-init: app-permissions composer-install app-migrations
+app-init: app-permissions composer-install app-migrations app-fixtures
 
 composer-install:
 	docker-compose run --rm php-cli composer install
@@ -27,7 +27,10 @@ validate-schema:
 	docker-compose run --rm php-cli composer app orm:validate-schema
 
 app-permissions:
-	docker run --rm -v ${PWD}:/app -w /app alpine chmod 777 public var/log -R
+	docker-compose run --rm -v ${PWD}:/app -w /app alpine chmod 777 public var/log -R
+
+app-fixtures:
+	docker-compose run --rm php-cli composer app fixtures:load
 
 composer-update:
 	docker-compose run --rm php-cli composer update
