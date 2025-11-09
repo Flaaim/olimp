@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 
 use App\Http\Action\HomeAction;
-use App\Http\Action\Parser\Parse;
+
 use App\Ticket\TicketController;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
@@ -15,6 +15,7 @@ return static function (App $app): void {
     $app->group('/v1', function (RouteCollectorProxy $group) {
         $group->group('/parser', function (RouteCollectorProxy $group) {
             $group->post('/parse', \App\Http\Action\V1\Parser\Parse\RequestAction::class);
+            $group->post('/gpnparse', \App\Http\Action\V1\Parser\GpnParser\RequestAction::class);
 
         });
 

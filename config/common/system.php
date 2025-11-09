@@ -17,7 +17,9 @@ return [
             'http://olimpoks.chukk.ru:82/',
             'http://olimpoks5.krsk.irgups.ru/',
             'http://cpkchita.ru:9001/',
-            'https://olimpoks.hydroschool.ru/'
+            'https://olimpoks.hydroschool.ru/',
+
+            'https://gpn.olimpoks.ru/'
         ],
         'basePath' => __DIR__ . '/../../public/QuestionImages',
         'urlPath' => 'http://localhost/QuestionImages',
