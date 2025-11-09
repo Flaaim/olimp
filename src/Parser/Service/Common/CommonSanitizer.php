@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Parser\Service;
+namespace App\Parser\Service\Common;
 
+use App\Parser\Service\Interface\TicketSanitizer;
 use App\Service\TextSanitizer;
 
-final class TicketSanitizer
+final class CommonSanitizer implements TicketSanitizer
 {
     public function __construct(private readonly TextSanitizer $sanitizer)
     {}

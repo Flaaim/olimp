@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Parser\Service;
+namespace App\Parser\Service\Common;
 
 use App\Parser\Entity\Ticket\Ticket;
+use App\Parser\Service\Interface\TicketBuilder;
 use Ramsey\Uuid\Uuid;
 
-final class TicketBuilder
+final class CommonBuilder implements TicketBuilder
 {
     public function build(array $questionsData): Ticket
     {

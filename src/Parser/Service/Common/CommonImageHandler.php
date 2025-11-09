@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Parser\Service;
+namespace App\Parser\Service\Common;
 
-use App\Parser\Entity\Parser\Host;
+use App\Parser\Service\Interface\TicketImageHandler;
 use App\Service\ImageHandler;
 
-class TicketImageHandler
+final class CommonImageHandler implements TicketImageHandler
 {
     public function __construct(
         private readonly ImageHandler $imageHandler,

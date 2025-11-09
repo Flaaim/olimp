@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Parser\Service;
+namespace App\Parser\Service\Gpn;
 
+use App\Parser\Service\Interface\TicketValidator;
 use Webmozart\Assert\Assert;
 
-class TicketValidator
+final class GpnValidator implements TicketValidator
 {
     private const REQUIRED_QUESTION_FIELDS = [
-        'Id',
-        'Number',
-        'Text',
-        'QuestionMainImg'
+        'id',
+        'content',
+        'questionImg'
     ];
 
     private const REQUIRED_ANSWERS_FIELDS = [
-        'Text',
-        'Correct'
+        'content',
+        'isCorrect'
     ];
 
     public function validate(array $data): void
