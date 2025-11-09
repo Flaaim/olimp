@@ -2,7 +2,7 @@
 
 namespace App\Parser\Test\Unit\Service\Common;
 
-use App\Parser\Entity\Parser\Host;
+use App\Parser\Entity\Parser\CommonParser\Host;
 use App\Parser\Entity\Parser\HostMapper;
 use App\Parser\Service\Common\CommonImageHandler;
 use App\Service\ImageHandler;

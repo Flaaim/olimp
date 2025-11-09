@@ -25,6 +25,7 @@ class TicketResponseFactory
             throw new \InvalidArgumentException('Twig is required for HTML responses');
         }
         $this->type = $type;
+        $this->twig = $twig;
     }
 
     public function getType(): string

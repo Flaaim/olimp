@@ -2,11 +2,12 @@
 
 namespace App\Service;
 
-use App\Parser\Entity\Parser\Host;
+use App\Parser\Entity\Parser\CommonParser\Host;
+use App\Parser\Entity\Parser\GpnParser\Host as GpnHost;
 
 class ImageHandler
 {
-    public function __construct(private readonly Host $host)
+    public function __construct(private readonly Host|GpnHost $host)
     {}
 
     public function extractAndProcessMainImage(string $imageHtml): string

@@ -2,7 +2,7 @@
 
 namespace App\Parser\Test\Unit\Entity\Parser;
 
-use App\Parser\Entity\Parser\Course;
+use App\Parser\Entity\Parser\CommonParser\Course;
 use PHPUnit\Framework\TestCase;
 
 class CourseTest extends TestCase

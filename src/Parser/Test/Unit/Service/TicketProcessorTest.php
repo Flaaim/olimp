@@ -2,14 +2,18 @@
 
 namespace App\Parser\Test\Unit\Service;
 
-use App\Parser\Entity\Parser\Host;
+use App\Parser\Entity\Parser\CommonParser\Host;
 use App\Parser\Entity\Parser\HostMapper;
 use App\Parser\Entity\Ticket\Ticket;
-use App\Parser\Service\TicketImageHandler;
+use App\Parser\Service\Common\CommonBuilder;
+use App\Parser\Service\Common\CommonImageHandler;
+use App\Parser\Service\Common\CommonSanitizer;
+use App\Parser\Service\Common\CommonValidator;
+use App\Parser\Service\Interface\TicketBuilder;
+use App\Parser\Service\Interface\TicketImageHandler;
+use App\Parser\Service\Interface\TicketSanitizer;
+use App\Parser\Service\Interface\TicketValidator;
 use App\Parser\Service\TicketProcessor;
-use App\Parser\Service\TicketSanitizer;
-use App\Parser\Service\TicketBuilder;
-use App\Parser\Service\TicketValidator;
 use App\Service\ImageHandler;
 use App\Service\TextSanitizer;
 use PHPUnit\Framework\TestCase;
@@ -55,20 +59,20 @@ class TicketProcessorTest extends TestCase
 
     private function getSanitizer(): TicketSanitizer
     {
-        return new TicketSanitizer(new TextSanitizer());
+        return new CommonSanitizer(new TextSanitizer());
     }
     private function getBuilder(): TicketBuilder
     {
-        return new TicketBuilder();
+        return new CommonBuilder();
     }
     private function getTicketValidator(): TicketValidator
     {
-        return new TicketValidator();
+        return new CommonValidator();
     }
 
     private function getTicketImageHandler(): TicketImageHandler
     {
-        return new TicketImageHandler(
+        return new CommonImageHandler(
             new ImageHandler(
                 $this->getHost()
             )

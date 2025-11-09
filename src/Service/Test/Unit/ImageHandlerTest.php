@@ -2,7 +2,7 @@
 
 namespace App\Service\Test\Unit;
 
-use App\Parser\Entity\Parser\Host;
+use App\Parser\Entity\Parser\CommonParser\Host;
 use App\Parser\Entity\Parser\HostMapper;
 use App\Service\ImageHandler;
 use PHPUnit\Framework\TestCase;

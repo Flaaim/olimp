@@ -2,7 +2,7 @@
 
 namespace App\Parser\Test\Unit\Entity\Parser;
 
-use App\Parser\Entity\Parser\Host;
+use App\Parser\Entity\Parser\CommonParser\Host;
 use App\Parser\Entity\Parser\HostMapper;
 use PHPUnit\Framework\TestCase;
 

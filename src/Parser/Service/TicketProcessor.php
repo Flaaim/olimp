@@ -3,6 +3,10 @@
 namespace App\Parser\Service;
 
 use App\Parser\Entity\Ticket\Ticket;
+use App\Parser\Service\Interface\TicketBuilder;
+use App\Parser\Service\Interface\TicketImageHandler;
+use App\Parser\Service\Interface\TicketSanitizer;
+use App\Parser\Service\Interface\TicketValidator;
 
 class TicketProcessor
 {
@@ -12,9 +16,9 @@ class TicketProcessor
     private TicketImageHandler $imageHandler;
 
     public function __construct(
-        TicketSanitizer $sanitizer,
-        TicketBuilder $builder,
-        TicketValidator $validator,
+        TicketSanitizer    $sanitizer,
+        TicketBuilder      $builder,
+        TicketValidator    $validator,
         TicketImageHandler $imageHandler
     )
     {
