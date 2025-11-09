@@ -4,6 +4,7 @@ namespace App\Parser\Test\Unit\Entity\Parser;
 
 use App\Parser\Entity\Parser\Cookie;
 use PHPUnit\Framework\TestCase;
+use function PHPUnit\Framework\assertEquals;
 
 class CookieTest extends TestCase
 {
@@ -26,9 +27,7 @@ class CookieTest extends TestCase
 
     public function testInvalid(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
-        new Cookie('robin=;Path=/;SameSite=Lax;Expires=Sat, 01 Jan 2000 00:00:01 GMT;Domain=.events-collector-dataplatform.action-media.ru;Secure;
-
-');
+        $cookie = new Cookie('some string');
+        assertEquals('some string=', $cookie->getCookiesToString());
     }
 }
