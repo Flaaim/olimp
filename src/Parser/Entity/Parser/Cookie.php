@@ -9,12 +9,8 @@ class Cookie
     private array $cookies;
     public function __construct(string $value)
     {
-
         Assert::notEmpty($value);
         $this->cookies = $this->parseCookieString($value);
-
-        Assert::keyExists($this->cookies, '.OLIMPAUTH');
-        Assert::notEmpty($this->cookies['.OLIMPAUTH']);
     }
     private function parseCookieString(string $cookieString): array
     {
