@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Parser\Test\Unit\Service;
+namespace App\Parser\Test\Unit\Service\Common;
 
 use App\Parser\Entity\Parser\Host;
 use App\Parser\Entity\Parser\HostMapper;
-use App\Parser\Service\TicketImageHandler;
+use App\Parser\Service\Common\CommonImageHandler;
 use App\Service\ImageHandler;
 use PHPUnit\Framework\TestCase;
 
-class TicketImageHandlerTest extends TestCase
+class CommonImageHandlerTest extends TestCase
 {
     public function testSuccess(): void
     {
-        $handler = (new TicketImageHandler(
+        $handler = (new CommonImageHandler(
             new ImageHandler(
                 $this->getHost(),
             )

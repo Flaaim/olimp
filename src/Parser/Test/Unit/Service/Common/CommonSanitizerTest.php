@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Parser\Test\Unit\Service;
+namespace App\Parser\Test\Unit\Service\Common;
 
-use App\Parser\Service\TicketSanitizer;
+use App\Parser\Service\Common\CommonSanitizer;
 use App\Service\TextSanitizer;
 use PHPUnit\Framework\TestCase;
 
-class TicketSanitizerTest extends TestCase
+class CommonSanitizerTest extends TestCase
 {
     public function testSuccess(): void
     {
-        $sanitized = (new TicketSanitizer(new TextSanitizer()))->sanitize($this->getQuestionsWithTags());
+        $sanitized = (new CommonSanitizer(new TextSanitizer()))->sanitize($this->getQuestionsWithTags());
 
         $this->assertEquals($this->getSanitizedQuestions(), $sanitized);
     }

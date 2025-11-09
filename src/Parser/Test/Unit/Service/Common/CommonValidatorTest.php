@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Parser\Test\Unit\Service;
+namespace App\Parser\Test\Unit\Service\Common;
 
-use App\Parser\Service\TicketValidator;
+use App\Parser\Service\Common\CommonValidator;
 use PHPUnit\Framework\TestCase;
 
-class TicketValidatorTest extends TestCase
+class CommonValidatorTest extends TestCase
 {
     public function testSuccess(): void
     {
-        $validator = new TicketValidator();
+        $validator = new CommonValidator();
         $validator->validate($this->getValidQuestions());
 
 
@@ -18,14 +18,14 @@ class TicketValidatorTest extends TestCase
 
     public function testEmpty(): void
     {
-        $validator = new TicketValidator();
+        $validator = new CommonValidator();
         $this->expectException(\InvalidArgumentException::class);
         $validator->validate([]);
     }
 
     public function testInvalidQuestion(): void
     {
-        $validator = new TicketValidator();
+        $validator = new CommonValidator();
         $this->expectException(\InvalidArgumentException::class);
 
         $validator->validate($this->getInvalidQuestions());

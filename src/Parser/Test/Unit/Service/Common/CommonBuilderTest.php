@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Parser\Test\Unit\Service;
+namespace App\Parser\Test\Unit\Service\Common;
 
-use App\Parser\Entity\Ticket\Ticket;
-use App\Parser\Service\TicketBuilder;
+use App\Parser\Service\Common\CommonBuilder;
 use PHPUnit\Framework\TestCase;
 
-class TicketBuilderTest extends TestCase
+class CommonBuilderTest extends TestCase
 {
 
     public function testSuccess(): void
     {
-        $ticket = (new TicketBuilder())->build($this->getValidQuestions());
+        $ticket = (new CommonBuilder())->build($this->getValidQuestions());
 
         $this->assertIsArray($ticket->getQuestions()->toArray());
         $this->assertEquals($this->getValidQuestions()[0]['Number'], $ticket->getQuestions()->get(0)->getNumber());
